@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialStorageInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialStorageInfo">
+        <!--@Table material_storage_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="mateId" column="mate_id" jdbcType="INTEGER"/>
+        <result property="warehouseId" column="warehouse_id" jdbcType="INTEGER"/>
+        <result property="storageCount" column="storage_count" jdbcType="INTEGER"/>
+        <result property="price" column="price" jdbcType="NUMERIC"/>
+        <result property="sumAmount" column="sum_amount" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, mate_id, warehouse_id, storage_count, price, sum_amount
+        from engineer.material_storage_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, mate_id, warehouse_id, storage_count, price, sum_amount
+        from engineer.material_storage_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, mate_id, warehouse_id, storage_count, price, sum_amount
+        from engineer.material_storage_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="mateId != null">
+                and mate_id = #{mateId}
+            </if>
+            <if test="warehouseId != null">
+                and warehouse_id = #{warehouseId}
+            </if>
+            <if test="storageCount != null">
+                and storage_count = #{storageCount}
+            </if>
+            <if test="price != null">
+                and price = #{price}
+            </if>
+            <if test="sumAmount != null">
+                and sum_amount = #{sumAmount}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_storage_info(p_id, mate_id, warehouse_id, storage_count, price, sum_amount)
+        values (#{pId}, #{mateId}, #{warehouseId}, #{storageCount}, #{price}, #{sumAmount})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_storage_info
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="mateId != null">
+                mate_id = #{mateId},
+            </if>
+            <if test="warehouseId != null">
+                warehouse_id = #{warehouseId},
+            </if>
+            <if test="storageCount != null">
+                storage_count = #{storageCount},
+            </if>
+            <if test="price != null">
+                price = #{price},
+            </if>
+            <if test="sumAmount != null">
+                sum_amount = #{sumAmount},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_storage_info where id = #{id}
+    </delete>
+
+</mapper>

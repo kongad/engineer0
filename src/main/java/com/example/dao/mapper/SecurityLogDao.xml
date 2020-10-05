@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.SecurityLogDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.SecurityLog">
+        <!--@Table security_log-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="fillUser" column="fill_user" jdbcType="INTEGER"/>
+        <result property="workerCount" column="worker_count" jdbcType="INTEGER"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="temperature" column="temperature" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="workPart" column="work_part" jdbcType="VARCHAR"/>
+        <result property="securitySituation" column="security_situation" jdbcType="VARCHAR"/>
+        <result property="securityEduation" column="security_eduation" jdbcType="VARCHAR"/>
+        <result property="securityDisclosure" column="security_disclosure" jdbcType="VARCHAR"/>
+        <result property="acceptRecord" column="accept_record" jdbcType="VARCHAR"/>
+        <result property="securityCheck" column="security_check" jdbcType="VARCHAR"/>
+        <result property="securityMeetingRecord" column="security_meeting_record" jdbcType="VARCHAR"/>
+        <result property="other" column="other" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, worker_count, dept_id, temperature, update_date, work_part, security_situation, security_eduation, security_disclosure, accept_record, security_check, security_meeting_record, other, approve_status
+        from engineer.security_log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, worker_count, dept_id, temperature, update_date, work_part, security_situation, security_eduation, security_disclosure, accept_record, security_check, security_meeting_record, other, approve_status
+        from engineer.security_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, worker_count, dept_id, temperature, update_date, work_part, security_situation, security_eduation, security_disclosure, accept_record, security_check, security_meeting_record, other, approve_status
+        from engineer.security_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="fillUser != null">
+                and fill_user = #{fillUser}
+            </if>
+            <if test="workerCount != null">
+                and worker_count = #{workerCount}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="temperature != null and temperature != ''">
+                and temperature = #{temperature}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="workPart != null and workPart != ''">
+                and work_part = #{workPart}
+            </if>
+            <if test="securitySituation != null and securitySituation != ''">
+                and security_situation = #{securitySituation}
+            </if>
+            <if test="securityEduation != null and securityEduation != ''">
+                and security_eduation = #{securityEduation}
+            </if>
+            <if test="securityDisclosure != null and securityDisclosure != ''">
+                and security_disclosure = #{securityDisclosure}
+            </if>
+            <if test="acceptRecord != null and acceptRecord != ''">
+                and accept_record = #{acceptRecord}
+            </if>
+            <if test="securityCheck != null and securityCheck != ''">
+                and security_check = #{securityCheck}
+            </if>
+            <if test="securityMeetingRecord != null and securityMeetingRecord != ''">
+                and security_meeting_record = #{securityMeetingRecord}
+            </if>
+            <if test="other != null and other != ''">
+                and other = #{other}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.security_log(p_id, flow_id, fill_user, worker_count, dept_id, temperature, update_date, work_part, security_situation, security_eduation, security_disclosure, accept_record, security_check, security_meeting_record, other, approve_status)
+        values (#{pId}, #{flowId}, #{fillUser}, #{workerCount}, #{deptId}, #{temperature}, #{updateDate}, #{workPart}, #{securitySituation}, #{securityEduation}, #{securityDisclosure}, #{acceptRecord}, #{securityCheck}, #{securityMeetingRecord}, #{other}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.security_log
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="fillUser != null">
+                fill_user = #{fillUser},
+            </if>
+            <if test="workerCount != null">
+                worker_count = #{workerCount},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="temperature != null and temperature != ''">
+                temperature = #{temperature},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="workPart != null and workPart != ''">
+                work_part = #{workPart},
+            </if>
+            <if test="securitySituation != null and securitySituation != ''">
+                security_situation = #{securitySituation},
+            </if>
+            <if test="securityEduation != null and securityEduation != ''">
+                security_eduation = #{securityEduation},
+            </if>
+            <if test="securityDisclosure != null and securityDisclosure != ''">
+                security_disclosure = #{securityDisclosure},
+            </if>
+            <if test="acceptRecord != null and acceptRecord != ''">
+                accept_record = #{acceptRecord},
+            </if>
+            <if test="securityCheck != null and securityCheck != ''">
+                security_check = #{securityCheck},
+            </if>
+            <if test="securityMeetingRecord != null and securityMeetingRecord != ''">
+                security_meeting_record = #{securityMeetingRecord},
+            </if>
+            <if test="other != null and other != ''">
+                other = #{other},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.security_log where id = #{id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.TenderProjectInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.TenderProjectInfo">
+        <!--@Table tender_project_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectIntrduce" column="project_intrduce" jdbcType="VARCHAR"/>
+        <result property="projectAddress" column="project_address" jdbcType="VARCHAR"/>
+        <result property="projectType" column="project_type" jdbcType="INTEGER"/>
+        <result property="bidder" column="bidder" jdbcType="VARCHAR"/>
+        <result property="pretenderDate" column="pretender_date" jdbcType="TIMESTAMP"/>
+        <result property="pretenderFee" column="pretender_fee" jdbcType="NUMERIC"/>
+        <result property="pretenderAmount" column="pretender_amount" jdbcType="NUMERIC"/>
+        <result property="buildCompany" column="build_company" jdbcType="VARCHAR"/>
+        <result property="contactor" column="contactor" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="designCompany" column="design_company" jdbcType="VARCHAR"/>
+        <result property="superviderCompany" column="supervider_company" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="OTHER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, project_name, project_intrduce, project_address, project_type, bidder, pretender_date, pretender_fee, pretender_amount, build_company, contactor, contact_phone, design_company, supervider_company, comment, creator, create_date, flow_id, approve_status
+        from engineer.tender_project_info
+        where  = #{}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, project_name, project_intrduce, project_address, project_type, bidder, pretender_date, pretender_fee, pretender_amount, build_company, contactor, contact_phone, design_company, supervider_company, comment, creator, create_date, flow_id, approve_status
+        from engineer.tender_project_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, project_name, project_intrduce, project_address, project_type, bidder, pretender_date, pretender_fee, pretender_amount, build_company, contactor, contact_phone, design_company, supervider_company, comment, creator, create_date, flow_id, approve_status
+        from engineer.tender_project_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project_name = #{projectName}
+            </if>
+            <if test="projectIntrduce != null and projectIntrduce != ''">
+                and project_intrduce = #{projectIntrduce}
+            </if>
+            <if test="projectAddress != null and projectAddress != ''">
+                and project_address = #{projectAddress}
+            </if>
+            <if test="projectType != null">
+                and project_type = #{projectType}
+            </if>
+            <if test="bidder != null and bidder != ''">
+                and bidder = #{bidder}
+            </if>
+            <if test="pretenderDate != null">
+                and pretender_date = #{pretenderDate}
+            </if>
+            <if test="pretenderFee != null">
+                and pretender_fee = #{pretenderFee}
+            </if>
+            <if test="pretenderAmount != null">
+                and pretender_amount = #{pretenderAmount}
+            </if>
+            <if test="buildCompany != null and buildCompany != ''">
+                and build_company = #{buildCompany}
+            </if>
+            <if test="contactor != null and contactor != ''">
+                and contactor = #{contactor}
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                and contact_phone = #{contactPhone}
+            </if>
+            <if test="designCompany != null and designCompany != ''">
+                and design_company = #{designCompany}
+            </if>
+            <if test="superviderCompany != null and superviderCompany != ''">
+                and supervider_company = #{superviderCompany}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into engineer.tender_project_info(id, project_name, project_intrduce, project_address, project_type, bidder, pretender_date, pretender_fee, pretender_amount, build_company, contactor, contact_phone, design_company, supervider_company, comment, creator, create_date, flow_id, approve_status)
+        values (#{id}, #{projectName}, #{projectIntrduce}, #{projectAddress}, #{projectType}, #{bidder}, #{pretenderDate}, #{pretenderFee}, #{pretenderAmount}, #{buildCompany}, #{contactor}, #{contactPhone}, #{designCompany}, #{superviderCompany}, #{comment}, #{creator}, #{createDate}, #{flowId}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.tender_project_info
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="projectName != null and projectName != ''">
+                project_name = #{projectName},
+            </if>
+            <if test="projectIntrduce != null and projectIntrduce != ''">
+                project_intrduce = #{projectIntrduce},
+            </if>
+            <if test="projectAddress != null and projectAddress != ''">
+                project_address = #{projectAddress},
+            </if>
+            <if test="projectType != null">
+                project_type = #{projectType},
+            </if>
+            <if test="bidder != null and bidder != ''">
+                bidder = #{bidder},
+            </if>
+            <if test="pretenderDate != null">
+                pretender_date = #{pretenderDate},
+            </if>
+            <if test="pretenderFee != null">
+                pretender_fee = #{pretenderFee},
+            </if>
+            <if test="pretenderAmount != null">
+                pretender_amount = #{pretenderAmount},
+            </if>
+            <if test="buildCompany != null and buildCompany != ''">
+                build_company = #{buildCompany},
+            </if>
+            <if test="contactor != null and contactor != ''">
+                contactor = #{contactor},
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="designCompany != null and designCompany != ''">
+                design_company = #{designCompany},
+            </if>
+            <if test="superviderCompany != null and superviderCompany != ''">
+                supervider_company = #{superviderCompany},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.tender_project_info where  = #{}
+    </delete>
+
+</mapper>

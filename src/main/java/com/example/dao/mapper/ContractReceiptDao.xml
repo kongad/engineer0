@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ContractReceiptDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ContractReceipt">
+        <!--@Table contract_receipt-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="ctrId" column="ctr_id" jdbcType="INTEGER"/>
+        <result property="receiptName" column="receipt_name" jdbcType="VARCHAR"/>
+        <result property="receiptType" column="receipt_type" jdbcType="VARCHAR"/>
+        <result property="receiptAmount" column="receipt_amount" jdbcType="NUMERIC"/>
+        <result property="amountUpper" column="amount_upper" jdbcType="VARCHAR"/>
+        <result property="penalty" column="penalty" jdbcType="NUMERIC"/>
+        <result property="withhold" column="withhold" jdbcType="NUMERIC"/>
+        <result property="accountId" column="account_id" jdbcType="INTEGER"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="applyDate" column="apply_date" jdbcType="TIMESTAMP"/>
+        <result property="comments" column="comments" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pid, ctr_id, receipt_name, receipt_type, receipt_amount, amount_upper, penalty, withhold, account_id, applyer, apply_date, comments, approve_status, update_user, update_date
+        from engineer.contract_receipt
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pid, ctr_id, receipt_name, receipt_type, receipt_amount, amount_upper, penalty, withhold, account_id, applyer, apply_date, comments, approve_status, update_user, update_date
+        from engineer.contract_receipt
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pid, ctr_id, receipt_name, receipt_type, receipt_amount, amount_upper, penalty, withhold, account_id, applyer, apply_date, comments, approve_status, update_user, update_date
+        from engineer.contract_receipt
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="ctrId != null">
+                and ctr_id = #{ctrId}
+            </if>
+            <if test="receiptName != null and receiptName != ''">
+                and receipt_name = #{receiptName}
+            </if>
+            <if test="receiptType != null and receiptType != ''">
+                and receipt_type = #{receiptType}
+            </if>
+            <if test="receiptAmount != null">
+                and receipt_amount = #{receiptAmount}
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                and amount_upper = #{amountUpper}
+            </if>
+            <if test="penalty != null">
+                and penalty = #{penalty}
+            </if>
+            <if test="withhold != null">
+                and withhold = #{withhold}
+            </if>
+            <if test="accountId != null">
+                and account_id = #{accountId}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="applyDate != null">
+                and apply_date = #{applyDate}
+            </if>
+            <if test="comments != null and comments != ''">
+                and comments = #{comments}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.contract_receipt(pid, ctr_id, receipt_name, receipt_type, receipt_amount, amount_upper, penalty, withhold, account_id, applyer, apply_date, comments, approve_status, update_user, update_date)
+        values (#{pid}, #{ctrId}, #{receiptName}, #{receiptType}, #{receiptAmount}, #{amountUpper}, #{penalty}, #{withhold}, #{accountId}, #{applyer}, #{applyDate}, #{comments}, #{approveStatus}, #{updateUser}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.contract_receipt
+        <set>
+            <if test="pid != null">
+                pid = #{pid},
+            </if>
+            <if test="ctrId != null">
+                ctr_id = #{ctrId},
+            </if>
+            <if test="receiptName != null and receiptName != ''">
+                receipt_name = #{receiptName},
+            </if>
+            <if test="receiptType != null and receiptType != ''">
+                receipt_type = #{receiptType},
+            </if>
+            <if test="receiptAmount != null">
+                receipt_amount = #{receiptAmount},
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                amount_upper = #{amountUpper},
+            </if>
+            <if test="penalty != null">
+                penalty = #{penalty},
+            </if>
+            <if test="withhold != null">
+                withhold = #{withhold},
+            </if>
+            <if test="accountId != null">
+                account_id = #{accountId},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="comments != null and comments != ''">
+                comments = #{comments},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.contract_receipt where id = #{id}
+    </delete>
+
+</mapper>

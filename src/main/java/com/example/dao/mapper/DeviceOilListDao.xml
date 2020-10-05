@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.DeviceOilListDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.DeviceOilList">
+        <!--@Table device_oil_list-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dPlanId" column="d_plan_id" jdbcType="INTEGER"/>
+        <result property="materialId" column="material_id" jdbcType="INTEGER"/>
+        <result property="useCount" column="use_count" jdbcType="NUMERIC"/>
+        <result property="oilPrice" column="oil_price" jdbcType="NUMERIC"/>
+        <result property="usedFee" column="used_fee" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, oil_price, used_fee
+        from engineer.device_oil_list
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, oil_price, used_fee
+        from engineer.device_oil_list
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, oil_price, used_fee
+        from engineer.device_oil_list
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dPlanId != null">
+                and d_plan_id = #{dPlanId}
+            </if>
+            <if test="materialId != null">
+                and material_id = #{materialId}
+            </if>
+            <if test="useCount != null">
+                and use_count = #{useCount}
+            </if>
+            <if test="oilPrice != null">
+                and oil_price = #{oilPrice}
+            </if>
+            <if test="usedFee != null">
+                and used_fee = #{usedFee}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.device_oil_list(d_plan_id, material_id, use_count, oil_price, used_fee)
+        values (#{dPlanId}, #{materialId}, #{useCount}, #{oilPrice}, #{usedFee})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.device_oil_list
+        <set>
+            <if test="dPlanId != null">
+                d_plan_id = #{dPlanId},
+            </if>
+            <if test="materialId != null">
+                material_id = #{materialId},
+            </if>
+            <if test="useCount != null">
+                use_count = #{useCount},
+            </if>
+            <if test="oilPrice != null">
+                oil_price = #{oilPrice},
+            </if>
+            <if test="usedFee != null">
+                used_fee = #{usedFee},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.device_oil_list where id = #{id}
+    </delete>
+
+</mapper>

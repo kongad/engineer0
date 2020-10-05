@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ProjectPurchasePlanDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ProjectPurchasePlan">
+        <!--@Table project_purchase_plan-->
+        <result property="planNo" column="plan_no" jdbcType="VARCHAR"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="planName" column="plan_name" jdbcType="VARCHAR"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="OTHER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          plan_no, pro_id, flow_id, plan_name, applyer, date, comment, approve_status
+        from engineer.project_purchase_plan
+        where plan_no = #{planNo}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          plan_no, pro_id, flow_id, plan_name, applyer, date, comment, approve_status
+        from engineer.project_purchase_plan
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          plan_no, pro_id, flow_id, plan_name, applyer, date, comment, approve_status
+        from engineer.project_purchase_plan
+        <where>
+            <if test="planNo != null and planNo != ''">
+                and plan_no = #{planNo}
+            </if>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="planName != null and planName != ''">
+                and plan_name = #{planName}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="planNo" useGeneratedKeys="true">
+        insert into engineer.project_purchase_plan(pro_id, flow_id, plan_name, applyer, date, comment, approve_status)
+        values (#{proId}, #{flowId}, #{planName}, #{applyer}, #{date}, #{comment}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.project_purchase_plan
+        <set>
+            <if test="proId != null">
+                pro_id = #{proId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="planName != null and planName != ''">
+                plan_name = #{planName},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where plan_no = #{planNo}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.project_purchase_plan where plan_no = #{planNo}
+    </delete>
+
+</mapper>

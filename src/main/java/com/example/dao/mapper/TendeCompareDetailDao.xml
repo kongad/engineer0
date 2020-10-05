@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.TendeCompareDetailDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.TendeCompareDetail">
+        <!--@Table tende_compare_detail-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+        <result property="tenderContent" column="tender_content" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="workCount" column="work_count" jdbcType="VARCHAR"/>
+        <result property="basePrice" column="base_price" jdbcType="NUMERIC"/>
+        <result property="tenderDate" column="tender_date" jdbcType="TIMESTAMP"/>
+        <result property="provider1" column="provider1" jdbcType="VARCHAR"/>
+        <result property="offerPrice1" column="offer_price1" jdbcType="NUMERIC"/>
+        <result property="provider2" column="provider2" jdbcType="VARCHAR"/>
+        <result property="offerPrice2" column="offer_price2" jdbcType="NUMERIC"/>
+        <result property="provider3" column="provider3" jdbcType="VARCHAR"/>
+        <result property="offerPrice3" column="offer_price3" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, c_id, tender_content, unit, work_count, base_price, tender_date, provider1, offer_price1, provider2, offer_price2, provider3, offer_price3
+        from engineer.tende_compare_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, c_id, tender_content, unit, work_count, base_price, tender_date, provider1, offer_price1, provider2, offer_price2, provider3, offer_price3
+        from engineer.tende_compare_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, c_id, tender_content, unit, work_count, base_price, tender_date, provider1, offer_price1, provider2, offer_price2, provider3, offer_price3
+        from engineer.tende_compare_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="tenderContent != null and tenderContent != ''">
+                and tender_content = #{tenderContent}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="workCount != null and workCount != ''">
+                and work_count = #{workCount}
+            </if>
+            <if test="basePrice != null">
+                and base_price = #{basePrice}
+            </if>
+            <if test="tenderDate != null">
+                and tender_date = #{tenderDate}
+            </if>
+            <if test="provider1 != null and provider1 != ''">
+                and provider1 = #{provider1}
+            </if>
+            <if test="offerPrice1 != null">
+                and offer_price1 = #{offerPrice1}
+            </if>
+            <if test="provider2 != null and provider2 != ''">
+                and provider2 = #{provider2}
+            </if>
+            <if test="offerPrice2 != null">
+                and offer_price2 = #{offerPrice2}
+            </if>
+            <if test="provider3 != null and provider3 != ''">
+                and provider3 = #{provider3}
+            </if>
+            <if test="offerPrice3 != null">
+                and offer_price3 = #{offerPrice3}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.tende_compare_detail(c_id, tender_content, unit, work_count, base_price, tender_date, provider1, offer_price1, provider2, offer_price2, provider3, offer_price3)
+        values (#{cId}, #{tenderContent}, #{unit}, #{workCount}, #{basePrice}, #{tenderDate}, #{provider1}, #{offerPrice1}, #{provider2}, #{offerPrice2}, #{provider3}, #{offerPrice3})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.tende_compare_detail
+        <set>
+            <if test="cId != null">
+                c_id = #{cId},
+            </if>
+            <if test="tenderContent != null and tenderContent != ''">
+                tender_content = #{tenderContent},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="workCount != null and workCount != ''">
+                work_count = #{workCount},
+            </if>
+            <if test="basePrice != null">
+                base_price = #{basePrice},
+            </if>
+            <if test="tenderDate != null">
+                tender_date = #{tenderDate},
+            </if>
+            <if test="provider1 != null and provider1 != ''">
+                provider1 = #{provider1},
+            </if>
+            <if test="offerPrice1 != null">
+                offer_price1 = #{offerPrice1},
+            </if>
+            <if test="provider2 != null and provider2 != ''">
+                provider2 = #{provider2},
+            </if>
+            <if test="offerPrice2 != null">
+                offer_price2 = #{offerPrice2},
+            </if>
+            <if test="provider3 != null and provider3 != ''">
+                provider3 = #{provider3},
+            </if>
+            <if test="offerPrice3 != null">
+                offer_price3 = #{offerPrice3},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.tende_compare_detail where id = #{id}
+    </delete>
+
+</mapper>

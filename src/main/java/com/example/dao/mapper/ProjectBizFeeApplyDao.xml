@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ProjectBizFeeApplyDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ProjectBizFeeApply">
+        <!--@Table project_biz_fee_apply-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="applyAmount" column="apply_amount" jdbcType="INTEGER"/>
+        <result property="upperAmount" column="upper_amount" jdbcType="VARCHAR"/>
+        <result property="applyReason" column="apply_reason" jdbcType="VARCHAR"/>
+        <result property="comments" column="comments" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, apply_amount, upper_amount, apply_reason, comments, attach_ids, approve_status, update_user, update_date
+        from engineer.project_biz_fee_apply
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, apply_amount, upper_amount, apply_reason, comments, attach_ids, approve_status, update_user, update_date
+        from engineer.project_biz_fee_apply
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, apply_amount, upper_amount, apply_reason, comments, attach_ids, approve_status, update_user, update_date
+        from engineer.project_biz_fee_apply
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="applyAmount != null">
+                and apply_amount = #{applyAmount}
+            </if>
+            <if test="upperAmount != null and upperAmount != ''">
+                and upper_amount = #{upperAmount}
+            </if>
+            <if test="applyReason != null and applyReason != ''">
+                and apply_reason = #{applyReason}
+            </if>
+            <if test="comments != null and comments != ''">
+                and comments = #{comments}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.project_biz_fee_apply(p_id, flow_id, applyer, apply_amount, upper_amount, apply_reason, comments, attach_ids, approve_status, update_user, update_date)
+        values (#{pId}, #{flowId}, #{applyer}, #{applyAmount}, #{upperAmount}, #{applyReason}, #{comments}, #{attachIds}, #{approveStatus}, #{updateUser}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.project_biz_fee_apply
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="applyAmount != null">
+                apply_amount = #{applyAmount},
+            </if>
+            <if test="upperAmount != null and upperAmount != ''">
+                upper_amount = #{upperAmount},
+            </if>
+            <if test="applyReason != null and applyReason != ''">
+                apply_reason = #{applyReason},
+            </if>
+            <if test="comments != null and comments != ''">
+                comments = #{comments},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.project_biz_fee_apply where id = #{id}
+    </delete>
+
+</mapper>

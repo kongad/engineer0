@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.TenderPurchaseDetailDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.TenderPurchaseDetail">
+        <!--@Table tender_purchase_detail-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="planId" column="plan_id" jdbcType="INTEGER"/>
+        <result property="mateId" column="mate_id" jdbcType="INTEGER"/>
+        <result property="buyCount" column="buy_count" jdbcType="NUMERIC"/>
+        <result property="useDept" column="use_dept" jdbcType="VARCHAR"/>
+        <result property="buyTime" column="buy_time" jdbcType="TIMESTAMP"/>
+        <result property="buyAddress" column="buy_address" jdbcType="VARCHAR"/>
+        <result property="providerName" column="provider_name" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, plan_id, mate_id, buy_count, use_dept, buy_time, buy_address, provider_name
+        from engineer.tender_purchase_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, plan_id, mate_id, buy_count, use_dept, buy_time, buy_address, provider_name
+        from engineer.tender_purchase_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, plan_id, mate_id, buy_count, use_dept, buy_time, buy_address, provider_name
+        from engineer.tender_purchase_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="planId != null">
+                and plan_id = #{planId}
+            </if>
+            <if test="mateId != null">
+                and mate_id = #{mateId}
+            </if>
+            <if test="buyCount != null">
+                and buy_count = #{buyCount}
+            </if>
+            <if test="useDept != null and useDept != ''">
+                and use_dept = #{useDept}
+            </if>
+            <if test="buyTime != null">
+                and buy_time = #{buyTime}
+            </if>
+            <if test="buyAddress != null and buyAddress != ''">
+                and buy_address = #{buyAddress}
+            </if>
+            <if test="providerName != null and providerName != ''">
+                and provider_name = #{providerName}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.tender_purchase_detail(plan_id, mate_id, buy_count, use_dept, buy_time, buy_address, provider_name)
+        values (#{planId}, #{mateId}, #{buyCount}, #{useDept}, #{buyTime}, #{buyAddress}, #{providerName})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.tender_purchase_detail
+        <set>
+            <if test="planId != null">
+                plan_id = #{planId},
+            </if>
+            <if test="mateId != null">
+                mate_id = #{mateId},
+            </if>
+            <if test="buyCount != null">
+                buy_count = #{buyCount},
+            </if>
+            <if test="useDept != null and useDept != ''">
+                use_dept = #{useDept},
+            </if>
+            <if test="buyTime != null">
+                buy_time = #{buyTime},
+            </if>
+            <if test="buyAddress != null and buyAddress != ''">
+                buy_address = #{buyAddress},
+            </if>
+            <if test="providerName != null and providerName != ''">
+                provider_name = #{providerName},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.tender_purchase_detail where id = #{id}
+    </delete>
+
+</mapper>

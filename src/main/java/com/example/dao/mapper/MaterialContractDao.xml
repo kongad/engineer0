@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialContractDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialContract">
+        <!--@Table material_contract-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
+        <result property="contractType" column="contract_type" jdbcType="INTEGER"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="contractSignatory" column="contract_signatory" jdbcType="VARCHAR"/>
+        <result property="startDate" column="start_date" jdbcType="OTHER"/>
+        <result property="endDate" column="end_date" jdbcType="OTHER"/>
+        <result property="projectPeriod" column="project_period" jdbcType="VARCHAR"/>
+        <result property="contractAmount" column="contract_amount" jdbcType="NUMERIC"/>
+        <result property="amountUpper" column="amount_upper" jdbcType="VARCHAR"/>
+        <result property="paymentType" column="payment_type" jdbcType="VARCHAR"/>
+        <result property="settleType" column="settle_type" jdbcType="VARCHAR"/>
+        <result property="advancePay" column="advance_pay" jdbcType="NUMERIC"/>
+        <result property="depositAmount" column="deposit_amount" jdbcType="NUMERIC"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="paymentCondition" column="payment_condition" jdbcType="VARCHAR"/>
+        <result property="mainTerm" column="main_term" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_name, contract_type, provider_id, contract_signatory, start_date, end_date, project_period, contract_amount, amount_upper, payment_type, settle_type, advance_pay, deposit_amount, flow_id, approve_status, payment_condition, main_term, comment, attach_ids, create_date
+        from engineer.material_contract
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_name, contract_type, provider_id, contract_signatory, start_date, end_date, project_period, contract_amount, amount_upper, payment_type, settle_type, advance_pay, deposit_amount, flow_id, approve_status, payment_condition, main_term, comment, attach_ids, create_date
+        from engineer.material_contract
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_name, contract_type, provider_id, contract_signatory, start_date, end_date, project_period, contract_amount, amount_upper, payment_type, settle_type, advance_pay, deposit_amount, flow_id, approve_status, payment_condition, main_term, comment, attach_ids, create_date
+        from engineer.material_contract
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="contractName != null and contractName != ''">
+                and contract_name = #{contractName}
+            </if>
+            <if test="contractType != null">
+                and contract_type = #{contractType}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="contractSignatory != null and contractSignatory != ''">
+                and contract_signatory = #{contractSignatory}
+            </if>
+            <if test="startDate != null">
+                and start_date = #{startDate}
+            </if>
+            <if test="endDate != null">
+                and end_date = #{endDate}
+            </if>
+            <if test="projectPeriod != null and projectPeriod != ''">
+                and project_period = #{projectPeriod}
+            </if>
+            <if test="contractAmount != null">
+                and contract_amount = #{contractAmount}
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                and amount_upper = #{amountUpper}
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                and payment_type = #{paymentType}
+            </if>
+            <if test="settleType != null and settleType != ''">
+                and settle_type = #{settleType}
+            </if>
+            <if test="advancePay != null">
+                and advance_pay = #{advancePay}
+            </if>
+            <if test="depositAmount != null">
+                and deposit_amount = #{depositAmount}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="paymentCondition != null and paymentCondition != ''">
+                and payment_condition = #{paymentCondition}
+            </if>
+            <if test="mainTerm != null and mainTerm != ''">
+                and main_term = #{mainTerm}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_contract(p_id, contract_name, contract_type, provider_id, contract_signatory, start_date, end_date, project_period, contract_amount, amount_upper, payment_type, settle_type, advance_pay, deposit_amount, flow_id, approve_status, payment_condition, main_term, comment, attach_ids, create_date)
+        values (#{pId}, #{contractName}, #{contractType}, #{providerId}, #{contractSignatory}, #{startDate}, #{endDate}, #{projectPeriod}, #{contractAmount}, #{amountUpper}, #{paymentType}, #{settleType}, #{advancePay}, #{depositAmount}, #{flowId}, #{approveStatus}, #{paymentCondition}, #{mainTerm}, #{comment}, #{attachIds}, #{createDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_contract
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="contractName != null and contractName != ''">
+                contract_name = #{contractName},
+            </if>
+            <if test="contractType != null">
+                contract_type = #{contractType},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+            <if test="contractSignatory != null and contractSignatory != ''">
+                contract_signatory = #{contractSignatory},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+            <if test="projectPeriod != null and projectPeriod != ''">
+                project_period = #{projectPeriod},
+            </if>
+            <if test="contractAmount != null">
+                contract_amount = #{contractAmount},
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                amount_upper = #{amountUpper},
+            </if>
+            <if test="paymentType != null and paymentType != ''">
+                payment_type = #{paymentType},
+            </if>
+            <if test="settleType != null and settleType != ''">
+                settle_type = #{settleType},
+            </if>
+            <if test="advancePay != null">
+                advance_pay = #{advancePay},
+            </if>
+            <if test="depositAmount != null">
+                deposit_amount = #{depositAmount},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="paymentCondition != null and paymentCondition != ''">
+                payment_condition = #{paymentCondition},
+            </if>
+            <if test="mainTerm != null and mainTerm != ''">
+                main_term = #{mainTerm},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_contract where id = #{id}
+    </delete>
+
+</mapper>

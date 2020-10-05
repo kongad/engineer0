@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.DesignModifyDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.DesignModify">
+        <!--@Table design_modify-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="contractId" column="contract_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="fillUser" column="fill_user" jdbcType="INTEGER"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="modifyAmount" column="modify_amount" jdbcType="NUMERIC"/>
+        <result property="amountUpper" column="amount_upper" jdbcType="VARCHAR"/>
+        <result property="modifyApplyCompany" column="modify_apply_company" jdbcType="INTEGER"/>
+        <result property="orignalAttachIds" column="orignal_attach_ids" jdbcType="VARCHAR"/>
+        <result property="modifyAttachIds" column="modify_attach_ids" jdbcType="VARCHAR"/>
+        <result property="modifyReason" column="modify_reason" jdbcType="VARCHAR"/>
+        <result property="modifyContent" column="modify_content" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_id, flow_id, fill_user, update_date, approve_status, modify_amount, amount_upper, modify_apply_company, orignal_attach_ids, modify_attach_ids, modify_reason, modify_content, comment
+        from engineer.design_modify
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_id, flow_id, fill_user, update_date, approve_status, modify_amount, amount_upper, modify_apply_company, orignal_attach_ids, modify_attach_ids, modify_reason, modify_content, comment
+        from engineer.design_modify
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, contract_id, flow_id, fill_user, update_date, approve_status, modify_amount, amount_upper, modify_apply_company, orignal_attach_ids, modify_attach_ids, modify_reason, modify_content, comment
+        from engineer.design_modify
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="contractId != null">
+                and contract_id = #{contractId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="fillUser != null">
+                and fill_user = #{fillUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="modifyAmount != null">
+                and modify_amount = #{modifyAmount}
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                and amount_upper = #{amountUpper}
+            </if>
+            <if test="modifyApplyCompany != null">
+                and modify_apply_company = #{modifyApplyCompany}
+            </if>
+            <if test="orignalAttachIds != null and orignalAttachIds != ''">
+                and orignal_attach_ids = #{orignalAttachIds}
+            </if>
+            <if test="modifyAttachIds != null and modifyAttachIds != ''">
+                and modify_attach_ids = #{modifyAttachIds}
+            </if>
+            <if test="modifyReason != null and modifyReason != ''">
+                and modify_reason = #{modifyReason}
+            </if>
+            <if test="modifyContent != null and modifyContent != ''">
+                and modify_content = #{modifyContent}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.design_modify(p_id, contract_id, flow_id, fill_user, update_date, approve_status, modify_amount, amount_upper, modify_apply_company, orignal_attach_ids, modify_attach_ids, modify_reason, modify_content, comment)
+        values (#{pId}, #{contractId}, #{flowId}, #{fillUser}, #{updateDate}, #{approveStatus}, #{modifyAmount}, #{amountUpper}, #{modifyApplyCompany}, #{orignalAttachIds}, #{modifyAttachIds}, #{modifyReason}, #{modifyContent}, #{comment})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.design_modify
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="contractId != null">
+                contract_id = #{contractId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="fillUser != null">
+                fill_user = #{fillUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="modifyAmount != null">
+                modify_amount = #{modifyAmount},
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                amount_upper = #{amountUpper},
+            </if>
+            <if test="modifyApplyCompany != null">
+                modify_apply_company = #{modifyApplyCompany},
+            </if>
+            <if test="orignalAttachIds != null and orignalAttachIds != ''">
+                orignal_attach_ids = #{orignalAttachIds},
+            </if>
+            <if test="modifyAttachIds != null and modifyAttachIds != ''">
+                modify_attach_ids = #{modifyAttachIds},
+            </if>
+            <if test="modifyReason != null and modifyReason != ''">
+                modify_reason = #{modifyReason},
+            </if>
+            <if test="modifyContent != null and modifyContent != ''">
+                modify_content = #{modifyContent},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.design_modify where id = #{id}
+    </delete>
+
+</mapper>

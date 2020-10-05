@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.TenderDepositApplyDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.TenderDepositApply">
+        <!--@Table tender_deposit_apply-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="bankName" column="bank_name" jdbcType="VARCHAR"/>
+        <result property="account" column="account" jdbcType="VARCHAR"/>
+        <result property="depositAmount" column="deposit_amount" jdbcType="INTEGER"/>
+        <result property="upperAmount" column="upper_amount" jdbcType="VARCHAR"/>
+        <result property="commitDate" column="commit_date" jdbcType="OTHER"/>
+        <result property="returnDate" column="return_date" jdbcType="OTHER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="attachementIds" column="attachement_ids" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, bank_name, account, deposit_amount, upper_amount, commit_date, return_date, comment, attachement_ids, approve_status, update_date, update_user
+        from engineer.tender_deposit_apply
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, bank_name, account, deposit_amount, upper_amount, commit_date, return_date, comment, attachement_ids, approve_status, update_date, update_user
+        from engineer.tender_deposit_apply
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, bank_name, account, deposit_amount, upper_amount, commit_date, return_date, comment, attachement_ids, approve_status, update_date, update_user
+        from engineer.tender_deposit_apply
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="bankName != null and bankName != ''">
+                and bank_name = #{bankName}
+            </if>
+            <if test="account != null and account != ''">
+                and account = #{account}
+            </if>
+            <if test="depositAmount != null">
+                and deposit_amount = #{depositAmount}
+            </if>
+            <if test="upperAmount != null and upperAmount != ''">
+                and upper_amount = #{upperAmount}
+            </if>
+            <if test="commitDate != null">
+                and commit_date = #{commitDate}
+            </if>
+            <if test="returnDate != null">
+                and return_date = #{returnDate}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="attachementIds != null and attachementIds != ''">
+                and attachement_ids = #{attachementIds}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.tender_deposit_apply(p_id, flow_id, bank_name, account, deposit_amount, upper_amount, commit_date, return_date, comment, attachement_ids, approve_status, update_date, update_user)
+        values (#{pId}, #{flowId}, #{bankName}, #{account}, #{depositAmount}, #{upperAmount}, #{commitDate}, #{returnDate}, #{comment}, #{attachementIds}, #{approveStatus}, #{updateDate}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.tender_deposit_apply
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="bankName != null and bankName != ''">
+                bank_name = #{bankName},
+            </if>
+            <if test="account != null and account != ''">
+                account = #{account},
+            </if>
+            <if test="depositAmount != null">
+                deposit_amount = #{depositAmount},
+            </if>
+            <if test="upperAmount != null and upperAmount != ''">
+                upper_amount = #{upperAmount},
+            </if>
+            <if test="commitDate != null">
+                commit_date = #{commitDate},
+            </if>
+            <if test="returnDate != null">
+                return_date = #{returnDate},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="attachementIds != null and attachementIds != ''">
+                attachement_ids = #{attachementIds},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.tender_deposit_apply where id = #{id}
+    </delete>
+
+</mapper>

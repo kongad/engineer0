@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BuildListMaintainDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.BuildListMaintain">
+        <!--@Table build_list_maintain-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="mSubject" column="m_subject" jdbcType="VARCHAR"/>
+        <result property="maintainer" column="maintainer" jdbcType="VARCHAR"/>
+        <result property="mDate" column="m_date" jdbcType="OTHER"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, m_subject, maintainer, m_date, attach_ids
+        from engineer.build_list_maintain
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, m_subject, maintainer, m_date, attach_ids
+        from engineer.build_list_maintain
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, m_subject, maintainer, m_date, attach_ids
+        from engineer.build_list_maintain
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="mSubject != null and mSubject != ''">
+                and m_subject = #{mSubject}
+            </if>
+            <if test="maintainer != null and maintainer != ''">
+                and maintainer = #{maintainer}
+            </if>
+            <if test="mDate != null">
+                and m_date = #{mDate}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.build_list_maintain(p_id, m_subject, maintainer, m_date, attach_ids)
+        values (#{pId}, #{mSubject}, #{maintainer}, #{mDate}, #{attachIds})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.build_list_maintain
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="mSubject != null and mSubject != ''">
+                m_subject = #{mSubject},
+            </if>
+            <if test="maintainer != null and maintainer != ''">
+                maintainer = #{maintainer},
+            </if>
+            <if test="mDate != null">
+                m_date = #{mDate},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.build_list_maintain where id = #{id}
+    </delete>
+
+</mapper>

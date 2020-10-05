@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialInstorageRecordDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialInstorageRecord">
+        <!--@Table material_instorage_record-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="instorageName" column="instorage_name" jdbcType="VARCHAR"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="instorageAmount" column="instorage_amount" jdbcType="NUMERIC"/>
+        <result property="amountUpper" column="amount_upper" jdbcType="VARCHAR"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="OTHER"/>
+        <result property="buyerId" column="buyer_id" jdbcType="INTEGER"/>
+        <result property="deliveryPerson" column="delivery_person" jdbcType="VARCHAR"/>
+        <result property="acceptorId" column="acceptor_id" jdbcType="INTEGER"/>
+        <result property="instorageId" column="instorage_id" jdbcType="INTEGER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, instorage_name, provider_id, instorage_amount, amount_upper, applyer, date, buyer_id, delivery_person, acceptor_id, instorage_id, comment, approve_status, attach_ids
+        from engineer.material_instorage_record
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, instorage_name, provider_id, instorage_amount, amount_upper, applyer, date, buyer_id, delivery_person, acceptor_id, instorage_id, comment, approve_status, attach_ids
+        from engineer.material_instorage_record
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, instorage_name, provider_id, instorage_amount, amount_upper, applyer, date, buyer_id, delivery_person, acceptor_id, instorage_id, comment, approve_status, attach_ids
+        from engineer.material_instorage_record
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="instorageName != null and instorageName != ''">
+                and instorage_name = #{instorageName}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="instorageAmount != null">
+                and instorage_amount = #{instorageAmount}
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                and amount_upper = #{amountUpper}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="buyerId != null">
+                and buyer_id = #{buyerId}
+            </if>
+            <if test="deliveryPerson != null and deliveryPerson != ''">
+                and delivery_person = #{deliveryPerson}
+            </if>
+            <if test="acceptorId != null">
+                and acceptor_id = #{acceptorId}
+            </if>
+            <if test="instorageId != null">
+                and instorage_id = #{instorageId}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_instorage_record(pro_id, flow_id, instorage_name, provider_id, instorage_amount, amount_upper, applyer, date, buyer_id, delivery_person, acceptor_id, instorage_id, comment, approve_status, attach_ids)
+        values (#{proId}, #{flowId}, #{instorageName}, #{providerId}, #{instorageAmount}, #{amountUpper}, #{applyer}, #{date}, #{buyerId}, #{deliveryPerson}, #{acceptorId}, #{instorageId}, #{comment}, #{approveStatus}, #{attachIds})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_instorage_record
+        <set>
+            <if test="proId != null">
+                pro_id = #{proId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="instorageName != null and instorageName != ''">
+                instorage_name = #{instorageName},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+            <if test="instorageAmount != null">
+                instorage_amount = #{instorageAmount},
+            </if>
+            <if test="amountUpper != null and amountUpper != ''">
+                amount_upper = #{amountUpper},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="buyerId != null">
+                buyer_id = #{buyerId},
+            </if>
+            <if test="deliveryPerson != null and deliveryPerson != ''">
+                delivery_person = #{deliveryPerson},
+            </if>
+            <if test="acceptorId != null">
+                acceptor_id = #{acceptorId},
+            </if>
+            <if test="instorageId != null">
+                instorage_id = #{instorageId},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_instorage_record where id = #{id}
+    </delete>
+
+</mapper>

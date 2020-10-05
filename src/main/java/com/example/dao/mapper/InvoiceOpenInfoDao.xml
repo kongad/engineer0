@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.InvoiceOpenInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.InvoiceOpenInfo">
+        <!--@Table invoice_open_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="cId" column="c_id" jdbcType="INTEGER"/>
+        <result property="receiveCompanyId" column="receive_company_id" jdbcType="INTEGER"/>
+        <result property="openCompanyId" column="open_company_id" jdbcType="INTEGER"/>
+        <result property="invoiceType" column="invoice_type" jdbcType="VARCHAR"/>
+        <result property="invoiceNo" column="invoice_no" jdbcType="VARCHAR"/>
+        <result property="invoiceAmount" column="invoice_amount" jdbcType="NUMERIC"/>
+        <result property="accountBank" column="account_bank" jdbcType="VARCHAR"/>
+        <result property="accountNum" column="account_num" jdbcType="VARCHAR"/>
+        <result property="taxplayerNo" column="taxplayer_no" jdbcType="VARCHAR"/>
+        <result property="phoneAddress" column="phone_address" jdbcType="VARCHAR"/>
+        <result property="editer" column="editer" jdbcType="VARCHAR"/>
+        <result property="openDate" column="open_date" jdbcType="OTHER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, c_id, receive_company_id, open_company_id, invoice_type, invoice_no, invoice_amount, account_bank, account_num, taxplayer_no, phone_address, editer, open_date, comment
+        from engineer.invoice_open_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, c_id, receive_company_id, open_company_id, invoice_type, invoice_no, invoice_amount, account_bank, account_num, taxplayer_no, phone_address, editer, open_date, comment
+        from engineer.invoice_open_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, c_id, receive_company_id, open_company_id, invoice_type, invoice_no, invoice_amount, account_bank, account_num, taxplayer_no, phone_address, editer, open_date, comment
+        from engineer.invoice_open_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="cId != null">
+                and c_id = #{cId}
+            </if>
+            <if test="receiveCompanyId != null">
+                and receive_company_id = #{receiveCompanyId}
+            </if>
+            <if test="openCompanyId != null">
+                and open_company_id = #{openCompanyId}
+            </if>
+            <if test="invoiceType != null and invoiceType != ''">
+                and invoice_type = #{invoiceType}
+            </if>
+            <if test="invoiceNo != null and invoiceNo != ''">
+                and invoice_no = #{invoiceNo}
+            </if>
+            <if test="invoiceAmount != null">
+                and invoice_amount = #{invoiceAmount}
+            </if>
+            <if test="accountBank != null and accountBank != ''">
+                and account_bank = #{accountBank}
+            </if>
+            <if test="accountNum != null and accountNum != ''">
+                and account_num = #{accountNum}
+            </if>
+            <if test="taxplayerNo != null and taxplayerNo != ''">
+                and taxplayer_no = #{taxplayerNo}
+            </if>
+            <if test="phoneAddress != null and phoneAddress != ''">
+                and phone_address = #{phoneAddress}
+            </if>
+            <if test="editer != null and editer != ''">
+                and editer = #{editer}
+            </if>
+            <if test="openDate != null">
+                and open_date = #{openDate}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.invoice_open_info(p_id, c_id, receive_company_id, open_company_id, invoice_type, invoice_no, invoice_amount, account_bank, account_num, taxplayer_no, phone_address, editer, open_date, comment)
+        values (#{pId}, #{cId}, #{receiveCompanyId}, #{openCompanyId}, #{invoiceType}, #{invoiceNo}, #{invoiceAmount}, #{accountBank}, #{accountNum}, #{taxplayerNo}, #{phoneAddress}, #{editer}, #{openDate}, #{comment})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.invoice_open_info
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="cId != null">
+                c_id = #{cId},
+            </if>
+            <if test="receiveCompanyId != null">
+                receive_company_id = #{receiveCompanyId},
+            </if>
+            <if test="openCompanyId != null">
+                open_company_id = #{openCompanyId},
+            </if>
+            <if test="invoiceType != null and invoiceType != ''">
+                invoice_type = #{invoiceType},
+            </if>
+            <if test="invoiceNo != null and invoiceNo != ''">
+                invoice_no = #{invoiceNo},
+            </if>
+            <if test="invoiceAmount != null">
+                invoice_amount = #{invoiceAmount},
+            </if>
+            <if test="accountBank != null and accountBank != ''">
+                account_bank = #{accountBank},
+            </if>
+            <if test="accountNum != null and accountNum != ''">
+                account_num = #{accountNum},
+            </if>
+            <if test="taxplayerNo != null and taxplayerNo != ''">
+                taxplayer_no = #{taxplayerNo},
+            </if>
+            <if test="phoneAddress != null and phoneAddress != ''">
+                phone_address = #{phoneAddress},
+            </if>
+            <if test="editer != null and editer != ''">
+                editer = #{editer},
+            </if>
+            <if test="openDate != null">
+                open_date = #{openDate},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.invoice_open_info where id = #{id}
+    </delete>
+
+</mapper>

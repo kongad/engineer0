@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ProjectSurveyDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ProjectSurvey">
+        <!--@Table project_survey-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectId" column="project_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="joinUsers" column="join_users" jdbcType="VARCHAR"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="surveyStuation" column="survey_stuation" jdbcType="VARCHAR"/>
+        <result property="surveyDate" column="survey_date" jdbcType="OTHER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="attachementsIds" column="attachements_ids" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, project_id, flow_id, join_users, applyer, survey_stuation, survey_date, comment, attachements_ids, update_date, update_user, approve_status
+        from engineer.project_survey
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, project_id, flow_id, join_users, applyer, survey_stuation, survey_date, comment, attachements_ids, update_date, update_user, approve_status
+        from engineer.project_survey
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, project_id, flow_id, join_users, applyer, survey_stuation, survey_date, comment, attachements_ids, update_date, update_user, approve_status
+        from engineer.project_survey
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectId != null">
+                and project_id = #{projectId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="joinUsers != null and joinUsers != ''">
+                and join_users = #{joinUsers}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="surveyStuation != null and surveyStuation != ''">
+                and survey_stuation = #{surveyStuation}
+            </if>
+            <if test="surveyDate != null">
+                and survey_date = #{surveyDate}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="attachementsIds != null and attachementsIds != ''">
+                and attachements_ids = #{attachementsIds}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.project_survey(project_id, flow_id, join_users, applyer, survey_stuation, survey_date, comment, attachements_ids, update_date, update_user, approve_status)
+        values (#{projectId}, #{flowId}, #{joinUsers}, #{applyer}, #{surveyStuation}, #{surveyDate}, #{comment}, #{attachementsIds}, #{updateDate}, #{updateUser}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.project_survey
+        <set>
+            <if test="projectId != null">
+                project_id = #{projectId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="joinUsers != null and joinUsers != ''">
+                join_users = #{joinUsers},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="surveyStuation != null and surveyStuation != ''">
+                survey_stuation = #{surveyStuation},
+            </if>
+            <if test="surveyDate != null">
+                survey_date = #{surveyDate},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="attachementsIds != null and attachementsIds != ''">
+                attachements_ids = #{attachementsIds},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.project_survey where id = #{id}
+    </delete>
+
+</mapper>

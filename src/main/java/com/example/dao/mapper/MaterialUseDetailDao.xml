@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialUseDetailDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialUseDetail">
+        <!--@Table material_use_detail-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="useId" column="use_id" jdbcType="INTEGER"/>
+        <result property="mateId" column="mate_id" jdbcType="INTEGER"/>
+        <result property="useCount" column="use_count" jdbcType="INTEGER"/>
+        <result property="referencePrice" column="reference_price" jdbcType="NUMERIC"/>
+        <result property="useTo" column="use_to" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="column8" column="Column_8" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, use_id, mate_id, use_count, reference_price, use_to, comment, Column_8
+        from engineer.material_use_detail
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, use_id, mate_id, use_count, reference_price, use_to, comment, Column_8
+        from engineer.material_use_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, use_id, mate_id, use_count, reference_price, use_to, comment, Column_8
+        from engineer.material_use_detail
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="useId != null">
+                and use_id = #{useId}
+            </if>
+            <if test="mateId != null">
+                and mate_id = #{mateId}
+            </if>
+            <if test="useCount != null">
+                and use_count = #{useCount}
+            </if>
+            <if test="referencePrice != null">
+                and reference_price = #{referencePrice}
+            </if>
+            <if test="useTo != null and useTo != ''">
+                and use_to = #{useTo}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="column8 != null and column8 != ''">
+                and Column_8 = #{column8}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_use_detail(use_id, mate_id, use_count, reference_price, use_to, comment, Column_8)
+        values (#{useId}, #{mateId}, #{useCount}, #{referencePrice}, #{useTo}, #{comment}, #{column8})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_use_detail
+        <set>
+            <if test="useId != null">
+                use_id = #{useId},
+            </if>
+            <if test="mateId != null">
+                mate_id = #{mateId},
+            </if>
+            <if test="useCount != null">
+                use_count = #{useCount},
+            </if>
+            <if test="referencePrice != null">
+                reference_price = #{referencePrice},
+            </if>
+            <if test="useTo != null and useTo != ''">
+                use_to = #{useTo},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="column8 != null and column8 != ''">
+                Column_8 = #{column8},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_use_detail where id = #{id}
+    </delete>
+
+</mapper>

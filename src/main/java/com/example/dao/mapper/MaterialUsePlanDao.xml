@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialUsePlanDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialUsePlan">
+        <!--@Table material_use_plan-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="planSubject" column="plan_subject" jdbcType="VARCHAR"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="date" column="date" jdbcType="OTHER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, plan_subject, applyer, date, comment, approve_status
+        from engineer.material_use_plan
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, plan_subject, applyer, date, comment, approve_status
+        from engineer.material_use_plan
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, plan_subject, applyer, date, comment, approve_status
+        from engineer.material_use_plan
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="planSubject != null and planSubject != ''">
+                and plan_subject = #{planSubject}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="date != null">
+                and date = #{date}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_use_plan(pro_id, flow_id, plan_subject, applyer, date, comment, approve_status)
+        values (#{proId}, #{flowId}, #{planSubject}, #{applyer}, #{date}, #{comment}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_use_plan
+        <set>
+            <if test="proId != null">
+                pro_id = #{proId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="planSubject != null and planSubject != ''">
+                plan_subject = #{planSubject},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="date != null">
+                date = #{date},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_use_plan where id = #{id}
+    </delete>
+
+</mapper>

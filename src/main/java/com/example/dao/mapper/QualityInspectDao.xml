@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.QualityInspectDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.QualityInspect">
+        <!--@Table quality_inspect-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="checkPart" column="check_part" jdbcType="VARCHAR"/>
+        <result property="qualityerId" column="qualityer_id" jdbcType="INTEGER"/>
+        <result property="checkSituation" column="check_situation" jdbcType="VARCHAR"/>
+        <result property="corretivePreventiveMeasure" column="corretive_preventive_measure" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="attacheIds" column="attache_ids" jdbcType="VARCHAR"/>
+        <result property="checkDate" column="check_date" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, check_part, qualityer_id, check_situation, corretive_preventive_measure, comment, attache_ids, check_date, update_user
+        from engineer.quality_inspect
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, check_part, qualityer_id, check_situation, corretive_preventive_measure, comment, attache_ids, check_date, update_user
+        from engineer.quality_inspect
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, check_part, qualityer_id, check_situation, corretive_preventive_measure, comment, attache_ids, check_date, update_user
+        from engineer.quality_inspect
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="checkPart != null and checkPart != ''">
+                and check_part = #{checkPart}
+            </if>
+            <if test="qualityerId != null">
+                and qualityer_id = #{qualityerId}
+            </if>
+            <if test="checkSituation != null and checkSituation != ''">
+                and check_situation = #{checkSituation}
+            </if>
+            <if test="corretivePreventiveMeasure != null and corretivePreventiveMeasure != ''">
+                and corretive_preventive_measure = #{corretivePreventiveMeasure}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="attacheIds != null and attacheIds != ''">
+                and attache_ids = #{attacheIds}
+            </if>
+            <if test="checkDate != null">
+                and check_date = #{checkDate}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.quality_inspect(p_id, check_part, qualityer_id, check_situation, corretive_preventive_measure, comment, attache_ids, check_date, update_user)
+        values (#{pId}, #{checkPart}, #{qualityerId}, #{checkSituation}, #{corretivePreventiveMeasure}, #{comment}, #{attacheIds}, #{checkDate}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.quality_inspect
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="checkPart != null and checkPart != ''">
+                check_part = #{checkPart},
+            </if>
+            <if test="qualityerId != null">
+                qualityer_id = #{qualityerId},
+            </if>
+            <if test="checkSituation != null and checkSituation != ''">
+                check_situation = #{checkSituation},
+            </if>
+            <if test="corretivePreventiveMeasure != null and corretivePreventiveMeasure != ''">
+                corretive_preventive_measure = #{corretivePreventiveMeasure},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="attacheIds != null and attacheIds != ''">
+                attache_ids = #{attacheIds},
+            </if>
+            <if test="checkDate != null">
+                check_date = #{checkDate},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.quality_inspect where id = #{id}
+    </delete>
+
+</mapper>

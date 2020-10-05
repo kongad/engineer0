@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ProviderInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ProviderInfo">
+        <!--@Table provider_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="providerName" column="provider_name" jdbcType="VARCHAR"/>
+        <result property="type" column="type" jdbcType="VARCHAR"/>
+        <result property="principal" column="principal" jdbcType="VARCHAR"/>
+        <result property="principalPhone" column="principal_phone" jdbcType="VARCHAR"/>
+        <result property="principalWchat" column="principal_wchat" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, provider_name, type, principal, principal_phone, principal_wchat, update_date, update_user
+        from engineer.provider_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, provider_name, type, principal, principal_phone, principal_wchat, update_date, update_user
+        from engineer.provider_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, provider_name, type, principal, principal_phone, principal_wchat, update_date, update_user
+        from engineer.provider_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="providerName != null and providerName != ''">
+                and provider_name = #{providerName}
+            </if>
+            <if test="type != null and type != ''">
+                and type = #{type}
+            </if>
+            <if test="principal != null and principal != ''">
+                and principal = #{principal}
+            </if>
+            <if test="principalPhone != null and principalPhone != ''">
+                and principal_phone = #{principalPhone}
+            </if>
+            <if test="principalWchat != null and principalWchat != ''">
+                and principal_wchat = #{principalWchat}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.provider_info(provider_name, type, principal, principal_phone, principal_wchat, update_date, update_user)
+        values (#{providerName}, #{type}, #{principal}, #{principalPhone}, #{principalWchat}, #{updateDate}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.provider_info
+        <set>
+            <if test="providerName != null and providerName != ''">
+                provider_name = #{providerName},
+            </if>
+            <if test="type != null and type != ''">
+                type = #{type},
+            </if>
+            <if test="principal != null and principal != ''">
+                principal = #{principal},
+            </if>
+            <if test="principalPhone != null and principalPhone != ''">
+                principal_phone = #{principalPhone},
+            </if>
+            <if test="principalWchat != null and principalWchat != ''">
+                principal_wchat = #{principalWchat},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.provider_info where id = #{id}
+    </delete>
+
+</mapper>

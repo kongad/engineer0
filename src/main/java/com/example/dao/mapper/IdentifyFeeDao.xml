@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.IdentifyFeeDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.IdentifyFee">
+        <!--@Table identify_fee-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="credentialName" column="credential_name" jdbcType="VARCHAR"/>
+        <result property="credentialNo" column="credential_no" jdbcType="VARCHAR"/>
+        <result property="startDate" column="start_date" jdbcType="OTHER"/>
+        <result property="endDate" column="end_date" jdbcType="OTHER"/>
+        <result property="credentialFee" column="credential_fee" jdbcType="NUMERIC"/>
+        <result property="feeUpper" column="fee_upper" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="pictureIds" column="picture_ids" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, name, sex, credential_name, credential_no, start_date, end_date, credential_fee, fee_upper, attach_ids, picture_ids, update_date
+        from engineer.identify_fee
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, name, sex, credential_name, credential_no, start_date, end_date, credential_fee, fee_upper, attach_ids, picture_ids, update_date
+        from engineer.identify_fee
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, name, sex, credential_name, credential_no, start_date, end_date, credential_fee, fee_upper, attach_ids, picture_ids, update_date
+        from engineer.identify_fee
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="credentialName != null and credentialName != ''">
+                and credential_name = #{credentialName}
+            </if>
+            <if test="credentialNo != null and credentialNo != ''">
+                and credential_no = #{credentialNo}
+            </if>
+            <if test="startDate != null">
+                and start_date = #{startDate}
+            </if>
+            <if test="endDate != null">
+                and end_date = #{endDate}
+            </if>
+            <if test="credentialFee != null">
+                and credential_fee = #{credentialFee}
+            </if>
+            <if test="feeUpper != null and feeUpper != ''">
+                and fee_upper = #{feeUpper}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="pictureIds != null and pictureIds != ''">
+                and picture_ids = #{pictureIds}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.identify_fee(name, sex, credential_name, credential_no, start_date, end_date, credential_fee, fee_upper, attach_ids, picture_ids, update_date)
+        values (#{name}, #{sex}, #{credentialName}, #{credentialNo}, #{startDate}, #{endDate}, #{credentialFee}, #{feeUpper}, #{attachIds}, #{pictureIds}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.identify_fee
+        <set>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="credentialName != null and credentialName != ''">
+                credential_name = #{credentialName},
+            </if>
+            <if test="credentialNo != null and credentialNo != ''">
+                credential_no = #{credentialNo},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+            <if test="credentialFee != null">
+                credential_fee = #{credentialFee},
+            </if>
+            <if test="feeUpper != null and feeUpper != ''">
+                fee_upper = #{feeUpper},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="pictureIds != null and pictureIds != ''">
+                picture_ids = #{pictureIds},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.identify_fee where id = #{id}
+    </delete>
+
+</mapper>

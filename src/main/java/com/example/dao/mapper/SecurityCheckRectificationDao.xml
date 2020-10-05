@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.SecurityCheckRectificationDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.SecurityCheckRectification">
+        <!--@Table security_check_rectification-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="checker" column="checker" jdbcType="VARCHAR"/>
+        <result property="buildScale" column="build_scale" jdbcType="VARCHAR"/>
+        <result property="progress" column="progress" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="buildPart" column="build_part" jdbcType="VARCHAR"/>
+        <result property="basicSituation" column="basic_situation" jdbcType="VARCHAR"/>
+        <result property="sceneCheckSituation" column="scene_check_situation" jdbcType="VARCHAR"/>
+        <result property="handleMeasure" column="handle_measure" jdbcType="VARCHAR"/>
+        <result property="recheckSituation" column="recheck_situation" jdbcType="VARCHAR"/>
+        <result property="recheckSignature" column="recheck_signature" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, checker, build_scale, progress, update_date, build_part, basic_situation, scene_check_situation, handle_measure, recheck_situation, recheck_signature, approve_status, attach_ids
+        from engineer.security_check_rectification
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, checker, build_scale, progress, update_date, build_part, basic_situation, scene_check_situation, handle_measure, recheck_situation, recheck_signature, approve_status, attach_ids
+        from engineer.security_check_rectification
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, checker, build_scale, progress, update_date, build_part, basic_situation, scene_check_situation, handle_measure, recheck_situation, recheck_signature, approve_status, attach_ids
+        from engineer.security_check_rectification
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="checker != null and checker != ''">
+                and checker = #{checker}
+            </if>
+            <if test="buildScale != null and buildScale != ''">
+                and build_scale = #{buildScale}
+            </if>
+            <if test="progress != null and progress != ''">
+                and progress = #{progress}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="buildPart != null and buildPart != ''">
+                and build_part = #{buildPart}
+            </if>
+            <if test="basicSituation != null and basicSituation != ''">
+                and basic_situation = #{basicSituation}
+            </if>
+            <if test="sceneCheckSituation != null and sceneCheckSituation != ''">
+                and scene_check_situation = #{sceneCheckSituation}
+            </if>
+            <if test="handleMeasure != null and handleMeasure != ''">
+                and handle_measure = #{handleMeasure}
+            </if>
+            <if test="recheckSituation != null and recheckSituation != ''">
+                and recheck_situation = #{recheckSituation}
+            </if>
+            <if test="recheckSignature != null and recheckSignature != ''">
+                and recheck_signature = #{recheckSignature}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.security_check_rectification(p_id, flow_id, checker, build_scale, progress, update_date, build_part, basic_situation, scene_check_situation, handle_measure, recheck_situation, recheck_signature, approve_status, attach_ids)
+        values (#{pId}, #{flowId}, #{checker}, #{buildScale}, #{progress}, #{updateDate}, #{buildPart}, #{basicSituation}, #{sceneCheckSituation}, #{handleMeasure}, #{recheckSituation}, #{recheckSignature}, #{approveStatus}, #{attachIds})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.security_check_rectification
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="checker != null and checker != ''">
+                checker = #{checker},
+            </if>
+            <if test="buildScale != null and buildScale != ''">
+                build_scale = #{buildScale},
+            </if>
+            <if test="progress != null and progress != ''">
+                progress = #{progress},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="buildPart != null and buildPart != ''">
+                build_part = #{buildPart},
+            </if>
+            <if test="basicSituation != null and basicSituation != ''">
+                basic_situation = #{basicSituation},
+            </if>
+            <if test="sceneCheckSituation != null and sceneCheckSituation != ''">
+                scene_check_situation = #{sceneCheckSituation},
+            </if>
+            <if test="handleMeasure != null and handleMeasure != ''">
+                handle_measure = #{handleMeasure},
+            </if>
+            <if test="recheckSituation != null and recheckSituation != ''">
+                recheck_situation = #{recheckSituation},
+            </if>
+            <if test="recheckSignature != null and recheckSignature != ''">
+                recheck_signature = #{recheckSignature},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.security_check_rectification where id = #{id}
+    </delete>
+
+</mapper>

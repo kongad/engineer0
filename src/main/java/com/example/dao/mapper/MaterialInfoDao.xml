@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialInfo">
+        <!--@Table material_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="materialName" column="material_name" jdbcType="VARCHAR"/>
+        <result property="mateTypeId" column="mate_type_id" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="VARCHAR"/>
+        <result property="unitModel" column="unit_model" jdbcType="VARCHAR"/>
+        <result property="color" column="color" jdbcType="VARCHAR"/>
+        <result property="brand" column="brand" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="OTHER"/>
+        <result property="updater" column="updater" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, material_name, mate_type_id, unit, price, unit_model, color, brand, update_time, updater
+        from engineer.material_info
+        where  = #{}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, material_name, mate_type_id, unit, price, unit_model, color, brand, update_time, updater
+        from engineer.material_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, material_name, mate_type_id, unit, price, unit_model, color, brand, update_time, updater
+        from engineer.material_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="materialName != null and materialName != ''">
+                and material_name = #{materialName}
+            </if>
+            <if test="mateTypeId != null and mateTypeId != ''">
+                and mate_type_id = #{mateTypeId}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="price != null and price != ''">
+                and price = #{price}
+            </if>
+            <if test="unitModel != null and unitModel != ''">
+                and unit_model = #{unitModel}
+            </if>
+            <if test="color != null and color != ''">
+                and color = #{color}
+            </if>
+            <if test="brand != null and brand != ''">
+                and brand = #{brand}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updater != null and updater != ''">
+                and updater = #{updater}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into engineer.material_info(id, material_name, mate_type_id, unit, price, unit_model, color, brand, update_time, updater)
+        values (#{id}, #{materialName}, #{mateTypeId}, #{unit}, #{price}, #{unitModel}, #{color}, #{brand}, #{updateTime}, #{updater})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_info
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="materialName != null and materialName != ''">
+                material_name = #{materialName},
+            </if>
+            <if test="mateTypeId != null and mateTypeId != ''">
+                mate_type_id = #{mateTypeId},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="price != null and price != ''">
+                price = #{price},
+            </if>
+            <if test="unitModel != null and unitModel != ''">
+                unit_model = #{unitModel},
+            </if>
+            <if test="color != null and color != ''">
+                color = #{color},
+            </if>
+            <if test="brand != null and brand != ''">
+                brand = #{brand},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updater != null and updater != ''">
+                updater = #{updater},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_info where  = #{}
+    </delete>
+
+</mapper>

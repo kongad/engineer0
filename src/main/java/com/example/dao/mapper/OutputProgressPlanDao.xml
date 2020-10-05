@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.OutputProgressPlanDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.OutputProgressPlan">
+        <!--@Table output_progress_plan-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="planSubject" column="plan_subject" jdbcType="VARCHAR"/>
+        <result property="editerId" column="editer_id" jdbcType="VARCHAR"/>
+        <result property="planDate" column="plan_date" jdbcType="OTHER"/>
+        <result property="totalAmount" column="total_amount" jdbcType="NUMERIC"/>
+        <result property="totalUpper" column="total_upper" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, plan_subject, editer_id, plan_date, total_amount, total_upper
+        from engineer.output_progress_plan
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, plan_subject, editer_id, plan_date, total_amount, total_upper
+        from engineer.output_progress_plan
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, plan_subject, editer_id, plan_date, total_amount, total_upper
+        from engineer.output_progress_plan
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="planSubject != null and planSubject != ''">
+                and plan_subject = #{planSubject}
+            </if>
+            <if test="editerId != null and editerId != ''">
+                and editer_id = #{editerId}
+            </if>
+            <if test="planDate != null">
+                and plan_date = #{planDate}
+            </if>
+            <if test="totalAmount != null">
+                and total_amount = #{totalAmount}
+            </if>
+            <if test="totalUpper != null">
+                and total_upper = #{totalUpper}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.output_progress_plan(p_id, plan_subject, editer_id, plan_date, total_amount, total_upper)
+        values (#{pId}, #{planSubject}, #{editerId}, #{planDate}, #{totalAmount}, #{totalUpper})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.output_progress_plan
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="planSubject != null and planSubject != ''">
+                plan_subject = #{planSubject},
+            </if>
+            <if test="editerId != null and editerId != ''">
+                editer_id = #{editerId},
+            </if>
+            <if test="planDate != null">
+                plan_date = #{planDate},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount},
+            </if>
+            <if test="totalUpper != null">
+                total_upper = #{totalUpper},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.output_progress_plan where id = #{id}
+    </delete>
+
+</mapper>

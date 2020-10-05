@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.DeviceRequireListDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.DeviceRequireList">
+        <!--@Table device_require_list-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="dPlanId" column="d_plan_id" jdbcType="INTEGER"/>
+        <result property="materialId" column="material_id" jdbcType="INTEGER"/>
+        <result property="useCount" column="use_count" jdbcType="INTEGER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, comment
+        from engineer.device_require_list
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, comment
+        from engineer.device_require_list
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, d_plan_id, material_id, use_count, comment
+        from engineer.device_require_list
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="dPlanId != null">
+                and d_plan_id = #{dPlanId}
+            </if>
+            <if test="materialId != null">
+                and material_id = #{materialId}
+            </if>
+            <if test="useCount != null">
+                and use_count = #{useCount}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.device_require_list(d_plan_id, material_id, use_count, comment)
+        values (#{dPlanId}, #{materialId}, #{useCount}, #{comment})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.device_require_list
+        <set>
+            <if test="dPlanId != null">
+                d_plan_id = #{dPlanId},
+            </if>
+            <if test="materialId != null">
+                material_id = #{materialId},
+            </if>
+            <if test="useCount != null">
+                use_count = #{useCount},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.device_require_list where id = #{id}
+    </delete>
+
+</mapper>

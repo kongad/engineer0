@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.SubcontractProgressPaymentDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.SubcontractProgressPayment">
+        <!--@Table subcontract_progress_payment-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="ctrId" column="ctr_id" jdbcType="INTEGER"/>
+        <result property="companyId" column="company_id" jdbcType="INTEGER"/>
+        <result property="contractName" column="contract_name" jdbcType="VARCHAR"/>
+        <result property="contractAmount" column="contract_amount" jdbcType="NUMERIC"/>
+        <result property="settleType" column="settle_type" jdbcType="VARCHAR"/>
+        <result property="agreeAmount" column="agree_amount" jdbcType="NUMERIC"/>
+        <result property="agreeUpper" column="agree_upper" jdbcType="VARCHAR"/>
+        <result property="penalty" column="penalty" jdbcType="NUMERIC"/>
+        <result property="withhold" column="withhold" jdbcType="NUMERIC"/>
+        <result property="settleComment" column="settle_comment" jdbcType="VARCHAR"/>
+        <result property="handlerId" column="handler_id" jdbcType="INTEGER"/>
+        <result property="applyDate" column="apply_date" jdbcType="TIMESTAMP"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, ctr_id, company_id, contract_name, contract_amount, settle_type, agree_amount, agree_upper, penalty, withhold, settle_comment, handler_id, apply_date, attach_ids, approve_status, update_user, update_date
+        from engineer.subcontract_progress_payment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, ctr_id, company_id, contract_name, contract_amount, settle_type, agree_amount, agree_upper, penalty, withhold, settle_comment, handler_id, apply_date, attach_ids, approve_status, update_user, update_date
+        from engineer.subcontract_progress_payment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, ctr_id, company_id, contract_name, contract_amount, settle_type, agree_amount, agree_upper, penalty, withhold, settle_comment, handler_id, apply_date, attach_ids, approve_status, update_user, update_date
+        from engineer.subcontract_progress_payment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="ctrId != null">
+                and ctr_id = #{ctrId}
+            </if>
+            <if test="companyId != null">
+                and company_id = #{companyId}
+            </if>
+            <if test="contractName != null and contractName != ''">
+                and contract_name = #{contractName}
+            </if>
+            <if test="contractAmount != null">
+                and contract_amount = #{contractAmount}
+            </if>
+            <if test="settleType != null and settleType != ''">
+                and settle_type = #{settleType}
+            </if>
+            <if test="agreeAmount != null">
+                and agree_amount = #{agreeAmount}
+            </if>
+            <if test="agreeUpper != null and agreeUpper != ''">
+                and agree_upper = #{agreeUpper}
+            </if>
+            <if test="penalty != null">
+                and penalty = #{penalty}
+            </if>
+            <if test="withhold != null">
+                and withhold = #{withhold}
+            </if>
+            <if test="settleComment != null and settleComment != ''">
+                and settle_comment = #{settleComment}
+            </if>
+            <if test="handlerId != null">
+                and handler_id = #{handlerId}
+            </if>
+            <if test="applyDate != null">
+                and apply_date = #{applyDate}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.subcontract_progress_payment(p_id, ctr_id, company_id, contract_name, contract_amount, settle_type, agree_amount, agree_upper, penalty, withhold, settle_comment, handler_id, apply_date, attach_ids, approve_status, update_user, update_date)
+        values (#{pId}, #{ctrId}, #{companyId}, #{contractName}, #{contractAmount}, #{settleType}, #{agreeAmount}, #{agreeUpper}, #{penalty}, #{withhold}, #{settleComment}, #{handlerId}, #{applyDate}, #{attachIds}, #{approveStatus}, #{updateUser}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.subcontract_progress_payment
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="ctrId != null">
+                ctr_id = #{ctrId},
+            </if>
+            <if test="companyId != null">
+                company_id = #{companyId},
+            </if>
+            <if test="contractName != null and contractName != ''">
+                contract_name = #{contractName},
+            </if>
+            <if test="contractAmount != null">
+                contract_amount = #{contractAmount},
+            </if>
+            <if test="settleType != null and settleType != ''">
+                settle_type = #{settleType},
+            </if>
+            <if test="agreeAmount != null">
+                agree_amount = #{agreeAmount},
+            </if>
+            <if test="agreeUpper != null and agreeUpper != ''">
+                agree_upper = #{agreeUpper},
+            </if>
+            <if test="penalty != null">
+                penalty = #{penalty},
+            </if>
+            <if test="withhold != null">
+                withhold = #{withhold},
+            </if>
+            <if test="settleComment != null and settleComment != ''">
+                settle_comment = #{settleComment},
+            </if>
+            <if test="handlerId != null">
+                handler_id = #{handlerId},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.subcontract_progress_payment where id = #{id}
+    </delete>
+
+</mapper>

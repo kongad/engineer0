@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.OutputProgressFilloutSubDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.OutputProgressFilloutSub">
+        <!--@Table output_progress_fillout_sub-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="filloutId" column="fillout_id" jdbcType="INTEGER"/>
+        <result property="listSubject" column="list_subject" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="tasksCount" column="tasks_count" jdbcType="INTEGER"/>
+        <result property="generalPrice" column="general_price" jdbcType="NUMERIC"/>
+        <result property="sumAmount" column="sum_amount" jdbcType="NUMERIC"/>
+        <result property="finishTaskCount" column="finish_task_count" jdbcType="INTEGER"/>
+        <result property="totalPrice" column="total_price" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, fillout_id, list_subject, unit, tasks_count, general_price, sum_amount, finish_task_count, total_price
+        from engineer.output_progress_fillout_sub
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, fillout_id, list_subject, unit, tasks_count, general_price, sum_amount, finish_task_count, total_price
+        from engineer.output_progress_fillout_sub
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, fillout_id, list_subject, unit, tasks_count, general_price, sum_amount, finish_task_count, total_price
+        from engineer.output_progress_fillout_sub
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="filloutId != null">
+                and fillout_id = #{filloutId}
+            </if>
+            <if test="listSubject != null and listSubject != ''">
+                and list_subject = #{listSubject}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="tasksCount != null">
+                and tasks_count = #{tasksCount}
+            </if>
+            <if test="generalPrice != null">
+                and general_price = #{generalPrice}
+            </if>
+            <if test="sumAmount != null">
+                and sum_amount = #{sumAmount}
+            </if>
+            <if test="finishTaskCount != null">
+                and finish_task_count = #{finishTaskCount}
+            </if>
+            <if test="totalPrice != null">
+                and total_price = #{totalPrice}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.output_progress_fillout_sub(fillout_id, list_subject, unit, tasks_count, general_price, sum_amount, finish_task_count, total_price)
+        values (#{filloutId}, #{listSubject}, #{unit}, #{tasksCount}, #{generalPrice}, #{sumAmount}, #{finishTaskCount}, #{totalPrice})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.output_progress_fillout_sub
+        <set>
+            <if test="filloutId != null">
+                fillout_id = #{filloutId},
+            </if>
+            <if test="listSubject != null and listSubject != ''">
+                list_subject = #{listSubject},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="tasksCount != null">
+                tasks_count = #{tasksCount},
+            </if>
+            <if test="generalPrice != null">
+                general_price = #{generalPrice},
+            </if>
+            <if test="sumAmount != null">
+                sum_amount = #{sumAmount},
+            </if>
+            <if test="finishTaskCount != null">
+                finish_task_count = #{finishTaskCount},
+            </if>
+            <if test="totalPrice != null">
+                total_price = #{totalPrice},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.output_progress_fillout_sub where id = #{id}
+    </delete>
+
+</mapper>

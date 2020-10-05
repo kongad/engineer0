@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BuildListMaintainSubDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.BuildListMaintainSub">
+        <!--@Table build_list_maintain_sub-->
+        <result property="buildNo" column="build_no" jdbcType="VARCHAR"/>
+        <result property="maintainId" column="maintain_id" jdbcType="INTEGER"/>
+        <result property="buildName" column="build_name" jdbcType="VARCHAR"/>
+        <result property="tasksCount" column="tasks_count" jdbcType="INTEGER"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          build_no, maintain_id, build_name, tasks_count, comment
+        from engineer.build_list_maintain_sub
+        where build_no = #{buildNo}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          build_no, maintain_id, build_name, tasks_count, comment
+        from engineer.build_list_maintain_sub
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          build_no, maintain_id, build_name, tasks_count, comment
+        from engineer.build_list_maintain_sub
+        <where>
+            <if test="buildNo != null and buildNo != ''">
+                and build_no = #{buildNo}
+            </if>
+            <if test="maintainId != null">
+                and maintain_id = #{maintainId}
+            </if>
+            <if test="buildName != null and buildName != ''">
+                and build_name = #{buildName}
+            </if>
+            <if test="tasksCount != null">
+                and tasks_count = #{tasksCount}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="buildNo" useGeneratedKeys="true">
+        insert into engineer.build_list_maintain_sub(maintain_id, build_name, tasks_count, comment)
+        values (#{maintainId}, #{buildName}, #{tasksCount}, #{comment})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.build_list_maintain_sub
+        <set>
+            <if test="maintainId != null">
+                maintain_id = #{maintainId},
+            </if>
+            <if test="buildName != null and buildName != ''">
+                build_name = #{buildName},
+            </if>
+            <if test="tasksCount != null">
+                tasks_count = #{tasksCount},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+        </set>
+        where build_no = #{buildNo}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.build_list_maintain_sub where build_no = #{buildNo}
+    </delete>
+
+</mapper>

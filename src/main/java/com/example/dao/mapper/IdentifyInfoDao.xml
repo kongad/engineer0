@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.IdentifyInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.IdentifyInfo">
+        <!--@Table identify_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="sex" column="sex" jdbcType="VARCHAR"/>
+        <result property="deptId" column="dept_id" jdbcType="INTEGER"/>
+        <result property="identify" column="identify" jdbcType="VARCHAR"/>
+        <result property="phoneNum" column="phone_num" jdbcType="VARCHAR"/>
+        <result property="publicOrg" column="public_org" jdbcType="VARCHAR"/>
+        <result property="credentialNo" column="credential_no" jdbcType="VARCHAR"/>
+        <result property="credentialType" column="credential_type" jdbcType="VARCHAR"/>
+        <result property="registerNo" column="register_no" jdbcType="VARCHAR"/>
+        <result property="qualityNo" column="quality_no" jdbcType="VARCHAR"/>
+        <result property="majorType" column="major_type" jdbcType="VARCHAR"/>
+        <result property="expireDate" column="expire_date" jdbcType="OTHER"/>
+        <result property="saveAddress" column="save_address" jdbcType="VARCHAR"/>
+        <result property="credentialPerson" column="credential_person" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="pictureIds" column="picture_ids" jdbcType="VARCHAR"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, name, sex, dept_id, identify, phone_num, public_org, credential_no, credential_type, register_no, quality_no, major_type, expire_date, save_address, credential_person, attach_ids, picture_ids, update_date
+        from engineer.identify_info
+        where  = #{}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, name, sex, dept_id, identify, phone_num, public_org, credential_no, credential_type, register_no, quality_no, major_type, expire_date, save_address, credential_person, attach_ids, picture_ids, update_date
+        from engineer.identify_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, name, sex, dept_id, identify, phone_num, public_org, credential_no, credential_type, register_no, quality_no, major_type, expire_date, save_address, credential_person, attach_ids, picture_ids, update_date
+        from engineer.identify_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="deptId != null">
+                and dept_id = #{deptId}
+            </if>
+            <if test="identify != null and identify != ''">
+                and identify = #{identify}
+            </if>
+            <if test="phoneNum != null and phoneNum != ''">
+                and phone_num = #{phoneNum}
+            </if>
+            <if test="publicOrg != null and publicOrg != ''">
+                and public_org = #{publicOrg}
+            </if>
+            <if test="credentialNo != null and credentialNo != ''">
+                and credential_no = #{credentialNo}
+            </if>
+            <if test="credentialType != null and credentialType != ''">
+                and credential_type = #{credentialType}
+            </if>
+            <if test="registerNo != null and registerNo != ''">
+                and register_no = #{registerNo}
+            </if>
+            <if test="qualityNo != null and qualityNo != ''">
+                and quality_no = #{qualityNo}
+            </if>
+            <if test="majorType != null and majorType != ''">
+                and major_type = #{majorType}
+            </if>
+            <if test="expireDate != null">
+                and expire_date = #{expireDate}
+            </if>
+            <if test="saveAddress != null and saveAddress != ''">
+                and save_address = #{saveAddress}
+            </if>
+            <if test="credentialPerson != null and credentialPerson != ''">
+                and credential_person = #{credentialPerson}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="pictureIds != null and pictureIds != ''">
+                and picture_ids = #{pictureIds}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into engineer.identify_info(id, name, sex, dept_id, identify, phone_num, public_org, credential_no, credential_type, register_no, quality_no, major_type, expire_date, save_address, credential_person, attach_ids, picture_ids, update_date)
+        values (#{id}, #{name}, #{sex}, #{deptId}, #{identify}, #{phoneNum}, #{publicOrg}, #{credentialNo}, #{credentialType}, #{registerNo}, #{qualityNo}, #{majorType}, #{expireDate}, #{saveAddress}, #{credentialPerson}, #{attachIds}, #{pictureIds}, #{updateDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.identify_info
+        <set>
+            <if test="id != null">
+                id = #{id},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="deptId != null">
+                dept_id = #{deptId},
+            </if>
+            <if test="identify != null and identify != ''">
+                identify = #{identify},
+            </if>
+            <if test="phoneNum != null and phoneNum != ''">
+                phone_num = #{phoneNum},
+            </if>
+            <if test="publicOrg != null and publicOrg != ''">
+                public_org = #{publicOrg},
+            </if>
+            <if test="credentialNo != null and credentialNo != ''">
+                credential_no = #{credentialNo},
+            </if>
+            <if test="credentialType != null and credentialType != ''">
+                credential_type = #{credentialType},
+            </if>
+            <if test="registerNo != null and registerNo != ''">
+                register_no = #{registerNo},
+            </if>
+            <if test="qualityNo != null and qualityNo != ''">
+                quality_no = #{qualityNo},
+            </if>
+            <if test="majorType != null and majorType != ''">
+                major_type = #{majorType},
+            </if>
+            <if test="expireDate != null">
+                expire_date = #{expireDate},
+            </if>
+            <if test="saveAddress != null and saveAddress != ''">
+                save_address = #{saveAddress},
+            </if>
+            <if test="credentialPerson != null and credentialPerson != ''">
+                credential_person = #{credentialPerson},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="pictureIds != null and pictureIds != ''">
+                picture_ids = #{pictureIds},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+        </set>
+        where  = #{}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.identify_info where  = #{}
+    </delete>
+
+</mapper>

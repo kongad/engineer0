@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.QualityReviewDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.QualityReview">
+        <!--@Table quality_review-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="applyer" column="applyer" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="attachements" column="attachements" jdbcType="VARCHAR"/>
+        <result property="applyDate" column="apply_date" jdbcType="OTHER"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, comment, attachements, apply_date, update_date, update_user
+        from engineer.quality_review
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, comment, attachements, apply_date, update_date, update_user
+        from engineer.quality_review
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, applyer, comment, attachements, apply_date, update_date, update_user
+        from engineer.quality_review
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="applyer != null and applyer != ''">
+                and applyer = #{applyer}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="attachements != null and attachements != ''">
+                and attachements = #{attachements}
+            </if>
+            <if test="applyDate != null">
+                and apply_date = #{applyDate}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.quality_review(p_id, flow_id, applyer, comment, attachements, apply_date, update_date, update_user)
+        values (#{pId}, #{flowId}, #{applyer}, #{comment}, #{attachements}, #{applyDate}, #{updateDate}, #{updateUser})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.quality_review
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="applyer != null and applyer != ''">
+                applyer = #{applyer},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="attachements != null and attachements != ''">
+                attachements = #{attachements},
+            </if>
+            <if test="applyDate != null">
+                apply_date = #{applyDate},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.quality_review where id = #{id}
+    </delete>
+
+</mapper>

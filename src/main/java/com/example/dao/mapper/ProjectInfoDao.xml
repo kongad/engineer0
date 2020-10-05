@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.ProjectInfoDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.ProjectInfo">
+        <!--@Table project_info-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="projectName" column="project_name" jdbcType="VARCHAR"/>
+        <result property="projectAddress" column="project_address" jdbcType="VARCHAR"/>
+        <result property="projectTacker" column="project_tacker" jdbcType="VARCHAR"/>
+        <result property="startPlanDate" column="start_plan_date" jdbcType="OTHER"/>
+        <result property="endPlanDate" column="end_plan_date" jdbcType="OTHER"/>
+        <result property="projectPeriod" column="project_period" jdbcType="VARCHAR"/>
+        <result property="projectCost" column="project_cost" jdbcType="INTEGER"/>
+        <result property="costUpper" column="cost_upper" jdbcType="VARCHAR"/>
+        <result property="espectProfit" column="espect_profit" jdbcType="NUMERIC"/>
+        <result property="projectType" column="project_type" jdbcType="INTEGER"/>
+        <result property="qualityLevel" column="quality_level" jdbcType="VARCHAR"/>
+        <result property="projectStatus" column="project_status" jdbcType="VARCHAR"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="buildCompany" column="build_company" jdbcType="VARCHAR"/>
+        <result property="contactor" column="contactor" jdbcType="VARCHAR"/>
+        <result property="contactPhone" column="contact_phone" jdbcType="VARCHAR"/>
+        <result property="contactAddress" column="contact_address" jdbcType="VARCHAR"/>
+        <result property="projectIntrduce" column="project_intrduce" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+        <result property="creator" column="creator" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="createDate" column="create_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, project_name, project_address, project_tacker, start_plan_date, end_plan_date, project_period, project_cost, cost_upper, espect_profit, project_type, quality_level, project_status, flow_id, approve_status, build_company, contactor, contact_phone, contact_address, project_intrduce, comment, creator, attach_ids, create_date
+        from engineer.project_info
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, project_name, project_address, project_tacker, start_plan_date, end_plan_date, project_period, project_cost, cost_upper, espect_profit, project_type, quality_level, project_status, flow_id, approve_status, build_company, contactor, contact_phone, contact_address, project_intrduce, comment, creator, attach_ids, create_date
+        from engineer.project_info
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, project_name, project_address, project_tacker, start_plan_date, end_plan_date, project_period, project_cost, cost_upper, espect_profit, project_type, quality_level, project_status, flow_id, approve_status, build_company, contactor, contact_phone, contact_address, project_intrduce, comment, creator, attach_ids, create_date
+        from engineer.project_info
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="projectName != null and projectName != ''">
+                and project_name = #{projectName}
+            </if>
+            <if test="projectAddress != null and projectAddress != ''">
+                and project_address = #{projectAddress}
+            </if>
+            <if test="projectTacker != null and projectTacker != ''">
+                and project_tacker = #{projectTacker}
+            </if>
+            <if test="startPlanDate != null">
+                and start_plan_date = #{startPlanDate}
+            </if>
+            <if test="endPlanDate != null">
+                and end_plan_date = #{endPlanDate}
+            </if>
+            <if test="projectPeriod != null and projectPeriod != ''">
+                and project_period = #{projectPeriod}
+            </if>
+            <if test="projectCost != null">
+                and project_cost = #{projectCost}
+            </if>
+            <if test="costUpper != null and costUpper != ''">
+                and cost_upper = #{costUpper}
+            </if>
+            <if test="espectProfit != null">
+                and espect_profit = #{espectProfit}
+            </if>
+            <if test="projectType != null">
+                and project_type = #{projectType}
+            </if>
+            <if test="qualityLevel != null and qualityLevel != ''">
+                and quality_level = #{qualityLevel}
+            </if>
+            <if test="projectStatus != null and projectStatus != ''">
+                and project_status = #{projectStatus}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="buildCompany != null and buildCompany != ''">
+                and build_company = #{buildCompany}
+            </if>
+            <if test="contactor != null and contactor != ''">
+                and contactor = #{contactor}
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                and contact_phone = #{contactPhone}
+            </if>
+            <if test="contactAddress != null and contactAddress != ''">
+                and contact_address = #{contactAddress}
+            </if>
+            <if test="projectIntrduce != null and projectIntrduce != ''">
+                and project_intrduce = #{projectIntrduce}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+            <if test="creator != null and creator != ''">
+                and creator = #{creator}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="createDate != null">
+                and create_date = #{createDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.project_info(project_name, project_address, project_tacker, start_plan_date, end_plan_date, project_period, project_cost, cost_upper, espect_profit, project_type, quality_level, project_status, flow_id, approve_status, build_company, contactor, contact_phone, contact_address, project_intrduce, comment, creator, attach_ids, create_date)
+        values (#{projectName}, #{projectAddress}, #{projectTacker}, #{startPlanDate}, #{endPlanDate}, #{projectPeriod}, #{projectCost}, #{costUpper}, #{espectProfit}, #{projectType}, #{qualityLevel}, #{projectStatus}, #{flowId}, #{approveStatus}, #{buildCompany}, #{contactor}, #{contactPhone}, #{contactAddress}, #{projectIntrduce}, #{comment}, #{creator}, #{attachIds}, #{createDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.project_info
+        <set>
+            <if test="projectName != null and projectName != ''">
+                project_name = #{projectName},
+            </if>
+            <if test="projectAddress != null and projectAddress != ''">
+                project_address = #{projectAddress},
+            </if>
+            <if test="projectTacker != null and projectTacker != ''">
+                project_tacker = #{projectTacker},
+            </if>
+            <if test="startPlanDate != null">
+                start_plan_date = #{startPlanDate},
+            </if>
+            <if test="endPlanDate != null">
+                end_plan_date = #{endPlanDate},
+            </if>
+            <if test="projectPeriod != null and projectPeriod != ''">
+                project_period = #{projectPeriod},
+            </if>
+            <if test="projectCost != null">
+                project_cost = #{projectCost},
+            </if>
+            <if test="costUpper != null and costUpper != ''">
+                cost_upper = #{costUpper},
+            </if>
+            <if test="espectProfit != null">
+                espect_profit = #{espectProfit},
+            </if>
+            <if test="projectType != null">
+                project_type = #{projectType},
+            </if>
+            <if test="qualityLevel != null and qualityLevel != ''">
+                quality_level = #{qualityLevel},
+            </if>
+            <if test="projectStatus != null and projectStatus != ''">
+                project_status = #{projectStatus},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="buildCompany != null and buildCompany != ''">
+                build_company = #{buildCompany},
+            </if>
+            <if test="contactor != null and contactor != ''">
+                contactor = #{contactor},
+            </if>
+            <if test="contactPhone != null and contactPhone != ''">
+                contact_phone = #{contactPhone},
+            </if>
+            <if test="contactAddress != null and contactAddress != ''">
+                contact_address = #{contactAddress},
+            </if>
+            <if test="projectIntrduce != null and projectIntrduce != ''">
+                project_intrduce = #{projectIntrduce},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+            <if test="creator != null and creator != ''">
+                creator = #{creator},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.project_info where id = #{id}
+    </delete>
+
+</mapper>

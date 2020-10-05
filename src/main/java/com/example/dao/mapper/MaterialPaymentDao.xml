@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.MaterialPaymentDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.MaterialPayment">
+        <!--@Table material_payment-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="proId" column="pro_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="paymentName" column="payment_name" jdbcType="VARCHAR"/>
+        <result property="orderType" column="order_type" jdbcType="VARCHAR"/>
+        <result property="orderNumber" column="order_number" jdbcType="VARCHAR"/>
+        <result property="providerId" column="provider_id" jdbcType="INTEGER"/>
+        <result property="providerAccount" column="provider_account" jdbcType="VARCHAR"/>
+        <result property="ourBankAccount" column="our_bank_account" jdbcType="VARCHAR"/>
+        <result property="payAmount" column="pay_amount" jdbcType="NUMERIC"/>
+        <result property="handlerId" column="handler_id" jdbcType="INTEGER"/>
+        <result property="fillDate" column="fill_date" jdbcType="OTHER"/>
+        <result property="payComment" column="pay_comment" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="INTEGER"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, payment_name, order_type, order_number, provider_id, provider_account, our_bank_account, pay_amount, handler_id, fill_date, pay_comment, approve_status, attach_ids
+        from engineer.material_payment
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, payment_name, order_type, order_number, provider_id, provider_account, our_bank_account, pay_amount, handler_id, fill_date, pay_comment, approve_status, attach_ids
+        from engineer.material_payment
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, pro_id, flow_id, payment_name, order_type, order_number, provider_id, provider_account, our_bank_account, pay_amount, handler_id, fill_date, pay_comment, approve_status, attach_ids
+        from engineer.material_payment
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="proId != null">
+                and pro_id = #{proId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="paymentName != null and paymentName != ''">
+                and payment_name = #{paymentName}
+            </if>
+            <if test="orderType != null and orderType != ''">
+                and order_type = #{orderType}
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                and order_number = #{orderNumber}
+            </if>
+            <if test="providerId != null">
+                and provider_id = #{providerId}
+            </if>
+            <if test="providerAccount != null and providerAccount != ''">
+                and provider_account = #{providerAccount}
+            </if>
+            <if test="ourBankAccount != null and ourBankAccount != ''">
+                and our_bank_account = #{ourBankAccount}
+            </if>
+            <if test="payAmount != null">
+                and pay_amount = #{payAmount}
+            </if>
+            <if test="handlerId != null">
+                and handler_id = #{handlerId}
+            </if>
+            <if test="fillDate != null">
+                and fill_date = #{fillDate}
+            </if>
+            <if test="payComment != null and payComment != ''">
+                and pay_comment = #{payComment}
+            </if>
+            <if test="approveStatus != null">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.material_payment(pro_id, flow_id, payment_name, order_type, order_number, provider_id, provider_account, our_bank_account, pay_amount, handler_id, fill_date, pay_comment, approve_status, attach_ids)
+        values (#{proId}, #{flowId}, #{paymentName}, #{orderType}, #{orderNumber}, #{providerId}, #{providerAccount}, #{ourBankAccount}, #{payAmount}, #{handlerId}, #{fillDate}, #{payComment}, #{approveStatus}, #{attachIds})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.material_payment
+        <set>
+            <if test="proId != null">
+                pro_id = #{proId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="paymentName != null and paymentName != ''">
+                payment_name = #{paymentName},
+            </if>
+            <if test="orderType != null and orderType != ''">
+                order_type = #{orderType},
+            </if>
+            <if test="orderNumber != null and orderNumber != ''">
+                order_number = #{orderNumber},
+            </if>
+            <if test="providerId != null">
+                provider_id = #{providerId},
+            </if>
+            <if test="providerAccount != null and providerAccount != ''">
+                provider_account = #{providerAccount},
+            </if>
+            <if test="ourBankAccount != null and ourBankAccount != ''">
+                our_bank_account = #{ourBankAccount},
+            </if>
+            <if test="payAmount != null">
+                pay_amount = #{payAmount},
+            </if>
+            <if test="handlerId != null">
+                handler_id = #{handlerId},
+            </if>
+            <if test="fillDate != null">
+                fill_date = #{fillDate},
+            </if>
+            <if test="payComment != null and payComment != ''">
+                pay_comment = #{payComment},
+            </if>
+            <if test="approveStatus != null">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.material_payment where id = #{id}
+    </delete>
+
+</mapper>

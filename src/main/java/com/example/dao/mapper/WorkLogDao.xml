@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.WorkLogDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.WorkLog">
+        <!--@Table work_log-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="fillUser" column="fill_user" jdbcType="INTEGER"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="forenoonWeather" column="forenoon_weather" jdbcType="VARCHAR"/>
+        <result property="afternoonWeather" column="afternoon_weather" jdbcType="VARCHAR"/>
+        <result property="lowTemperature" column="low_temperature" jdbcType="VARCHAR"/>
+        <result property="highTemperature" column="high_temperature" jdbcType="VARCHAR"/>
+        <result property="scenePicture" column="scene_picture" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="workProgress" column="work_progress" jdbcType="VARCHAR"/>
+        <result property="mainWorks" column="main_works" jdbcType="VARCHAR"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, forenoon_weather, afternoon_weather, low_temperature, high_temperature, scene_picture, attach_ids, work_progress, main_works, approve_status
+        from engineer.work_log
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, forenoon_weather, afternoon_weather, low_temperature, high_temperature, scene_picture, attach_ids, work_progress, main_works, approve_status
+        from engineer.work_log
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, forenoon_weather, afternoon_weather, low_temperature, high_temperature, scene_picture, attach_ids, work_progress, main_works, approve_status
+        from engineer.work_log
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="fillUser != null">
+                and fill_user = #{fillUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="forenoonWeather != null and forenoonWeather != ''">
+                and forenoon_weather = #{forenoonWeather}
+            </if>
+            <if test="afternoonWeather != null and afternoonWeather != ''">
+                and afternoon_weather = #{afternoonWeather}
+            </if>
+            <if test="lowTemperature != null and lowTemperature != ''">
+                and low_temperature = #{lowTemperature}
+            </if>
+            <if test="highTemperature != null and highTemperature != ''">
+                and high_temperature = #{highTemperature}
+            </if>
+            <if test="scenePicture != null and scenePicture != ''">
+                and scene_picture = #{scenePicture}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="workProgress != null and workProgress != ''">
+                and work_progress = #{workProgress}
+            </if>
+            <if test="mainWorks != null and mainWorks != ''">
+                and main_works = #{mainWorks}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.work_log(p_id, flow_id, fill_user, update_date, forenoon_weather, afternoon_weather, low_temperature, high_temperature, scene_picture, attach_ids, work_progress, main_works, approve_status)
+        values (#{pId}, #{flowId}, #{fillUser}, #{updateDate}, #{forenoonWeather}, #{afternoonWeather}, #{lowTemperature}, #{highTemperature}, #{scenePicture}, #{attachIds}, #{workProgress}, #{mainWorks}, #{approveStatus})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.work_log
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="fillUser != null">
+                fill_user = #{fillUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="forenoonWeather != null and forenoonWeather != ''">
+                forenoon_weather = #{forenoonWeather},
+            </if>
+            <if test="afternoonWeather != null and afternoonWeather != ''">
+                afternoon_weather = #{afternoonWeather},
+            </if>
+            <if test="lowTemperature != null and lowTemperature != ''">
+                low_temperature = #{lowTemperature},
+            </if>
+            <if test="highTemperature != null and highTemperature != ''">
+                high_temperature = #{highTemperature},
+            </if>
+            <if test="scenePicture != null and scenePicture != ''">
+                scene_picture = #{scenePicture},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="workProgress != null and workProgress != ''">
+                work_progress = #{workProgress},
+            </if>
+            <if test="mainWorks != null and mainWorks != ''">
+                main_works = #{mainWorks},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.work_log where id = #{id}
+    </delete>
+
+</mapper>

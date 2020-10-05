@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.TechnicalDisclosureDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.TechnicalDisclosure">
+        <!--@Table technical_disclosure-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="flowId" column="flow_id" jdbcType="INTEGER"/>
+        <result property="fillUser" column="fill_user" jdbcType="INTEGER"/>
+        <result property="updateDate" column="update_date" jdbcType="OTHER"/>
+        <result property="approveStatus" column="approve_status" jdbcType="VARCHAR"/>
+        <result property="disclosureAddress" column="disclosure_address" jdbcType="VARCHAR"/>
+        <result property="workCompany" column="work_company" jdbcType="INTEGER"/>
+        <result property="disclosurePerson" column="disclosure_person" jdbcType="VARCHAR"/>
+        <result property="byDisclosurePerson" column="by_disclosure_person" jdbcType="VARCHAR"/>
+        <result property="disclosureContent" column="disclosure_content" jdbcType="VARCHAR"/>
+        <result property="attachIds" column="attach_ids" jdbcType="VARCHAR"/>
+        <result property="comment" column="comment" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, approve_status, disclosure_address, work_company, disclosure_person, by_disclosure_person, disclosure_content, attach_ids, comment
+        from engineer.technical_disclosure
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, approve_status, disclosure_address, work_company, disclosure_person, by_disclosure_person, disclosure_content, attach_ids, comment
+        from engineer.technical_disclosure
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, flow_id, fill_user, update_date, approve_status, disclosure_address, work_company, disclosure_person, by_disclosure_person, disclosure_content, attach_ids, comment
+        from engineer.technical_disclosure
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="flowId != null">
+                and flow_id = #{flowId}
+            </if>
+            <if test="fillUser != null">
+                and fill_user = #{fillUser}
+            </if>
+            <if test="updateDate != null">
+                and update_date = #{updateDate}
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                and approve_status = #{approveStatus}
+            </if>
+            <if test="disclosureAddress != null and disclosureAddress != ''">
+                and disclosure_address = #{disclosureAddress}
+            </if>
+            <if test="workCompany != null">
+                and work_company = #{workCompany}
+            </if>
+            <if test="disclosurePerson != null and disclosurePerson != ''">
+                and disclosure_person = #{disclosurePerson}
+            </if>
+            <if test="byDisclosurePerson != null and byDisclosurePerson != ''">
+                and by_disclosure_person = #{byDisclosurePerson}
+            </if>
+            <if test="disclosureContent != null and disclosureContent != ''">
+                and disclosure_content = #{disclosureContent}
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                and attach_ids = #{attachIds}
+            </if>
+            <if test="comment != null and comment != ''">
+                and comment = #{comment}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.technical_disclosure(p_id, flow_id, fill_user, update_date, approve_status, disclosure_address, work_company, disclosure_person, by_disclosure_person, disclosure_content, attach_ids, comment)
+        values (#{pId}, #{flowId}, #{fillUser}, #{updateDate}, #{approveStatus}, #{disclosureAddress}, #{workCompany}, #{disclosurePerson}, #{byDisclosurePerson}, #{disclosureContent}, #{attachIds}, #{comment})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.technical_disclosure
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="flowId != null">
+                flow_id = #{flowId},
+            </if>
+            <if test="fillUser != null">
+                fill_user = #{fillUser},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate},
+            </if>
+            <if test="approveStatus != null and approveStatus != ''">
+                approve_status = #{approveStatus},
+            </if>
+            <if test="disclosureAddress != null and disclosureAddress != ''">
+                disclosure_address = #{disclosureAddress},
+            </if>
+            <if test="workCompany != null">
+                work_company = #{workCompany},
+            </if>
+            <if test="disclosurePerson != null and disclosurePerson != ''">
+                disclosure_person = #{disclosurePerson},
+            </if>
+            <if test="byDisclosurePerson != null and byDisclosurePerson != ''">
+                by_disclosure_person = #{byDisclosurePerson},
+            </if>
+            <if test="disclosureContent != null and disclosureContent != ''">
+                disclosure_content = #{disclosureContent},
+            </if>
+            <if test="attachIds != null and attachIds != ''">
+                attach_ids = #{attachIds},
+            </if>
+            <if test="comment != null and comment != ''">
+                comment = #{comment},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.technical_disclosure where id = #{id}
+    </delete>
+
+</mapper>

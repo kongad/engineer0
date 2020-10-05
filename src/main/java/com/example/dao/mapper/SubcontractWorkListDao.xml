@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.SubcontractWorkListDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.SubcontractWorkList">
+        <!--@Table subcontract_work_list-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="laborId" column="labor_id" jdbcType="INTEGER"/>
+        <result property="workContent" column="work_content" jdbcType="VARCHAR"/>
+        <result property="unit" column="unit" jdbcType="VARCHAR"/>
+        <result property="workCount" column="work_count" jdbcType="INTEGER"/>
+        <result property="unitPrice" column="unit_price" jdbcType="NUMERIC"/>
+        <result property="sumPrice" column="sum_price" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, labor_id, work_content, unit, work_count, unit_price, sum_price
+        from engineer.subcontract_work_list
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, labor_id, work_content, unit, work_count, unit_price, sum_price
+        from engineer.subcontract_work_list
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, labor_id, work_content, unit, work_count, unit_price, sum_price
+        from engineer.subcontract_work_list
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="laborId != null">
+                and labor_id = #{laborId}
+            </if>
+            <if test="workContent != null and workContent != ''">
+                and work_content = #{workContent}
+            </if>
+            <if test="unit != null and unit != ''">
+                and unit = #{unit}
+            </if>
+            <if test="workCount != null">
+                and work_count = #{workCount}
+            </if>
+            <if test="unitPrice != null">
+                and unit_price = #{unitPrice}
+            </if>
+            <if test="sumPrice != null">
+                and sum_price = #{sumPrice}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.subcontract_work_list(labor_id, work_content, unit, work_count, unit_price, sum_price)
+        values (#{laborId}, #{workContent}, #{unit}, #{workCount}, #{unitPrice}, #{sumPrice})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.subcontract_work_list
+        <set>
+            <if test="laborId != null">
+                labor_id = #{laborId},
+            </if>
+            <if test="workContent != null and workContent != ''">
+                work_content = #{workContent},
+            </if>
+            <if test="unit != null and unit != ''">
+                unit = #{unit},
+            </if>
+            <if test="workCount != null">
+                work_count = #{workCount},
+            </if>
+            <if test="unitPrice != null">
+                unit_price = #{unitPrice},
+            </if>
+            <if test="sumPrice != null">
+                sum_price = #{sumPrice},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.subcontract_work_list where id = #{id}
+    </delete>
+
+</mapper>

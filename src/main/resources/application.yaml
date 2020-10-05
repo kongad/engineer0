@@ -1,0 +1,38 @@
+# 配置tomcat端口号
+server:
+  port: 8080
+
+# 配置数据源
+spring:
+  hymeleaf:
+    suffix: .html
+    prefix: classpath:/templates/pages/
+    cache: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/engineer
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: root
+    password: 123456
+    type: com.microsoft.sqlserver.jdbc.SQLServerDataSource
+
+# 配置mybatis
+mybatis-plus:
+  # 配置类型别名包扫描
+  type-aliases-package: cn.ky.entity
+  # 配置sql语句映射文件路径
+  mapper-locations:
+    - classpath:cn/kd/dao/mapper/*.xml
+  # 驼峰映射
+  configuration:
+    map-underscore-to-camel-case: true
+
+# 配置日志
+logging:
+  level:
+    com.sanyang.dao: debug
+
+  security:
+    user:
+        name: jia
+        password: jia
+        roles: user,admin # 角色

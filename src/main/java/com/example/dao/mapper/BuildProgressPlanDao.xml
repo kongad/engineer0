@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.BuildProgressPlanDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.BuildProgressPlan">
+        <!--@Table build_progress_plan-->
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="pId" column="p_id" jdbcType="INTEGER"/>
+        <result property="mainTask" column="main_task" jdbcType="VARCHAR"/>
+        <result property="subTask" column="sub_task" jdbcType="VARCHAR"/>
+        <result property="startDate" column="start_date" jdbcType="OTHER"/>
+        <result property="endDate" column="end_date" jdbcType="OTHER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          id, p_id, main_task, sub_task, start_date, end_date
+        from engineer.build_progress_plan
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          id, p_id, main_task, sub_task, start_date, end_date
+        from engineer.build_progress_plan
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          id, p_id, main_task, sub_task, start_date, end_date
+        from engineer.build_progress_plan
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="pId != null">
+                and p_id = #{pId}
+            </if>
+            <if test="mainTask != null and mainTask != ''">
+                and main_task = #{mainTask}
+            </if>
+            <if test="subTask != null and subTask != ''">
+                and sub_task = #{subTask}
+            </if>
+            <if test="startDate != null">
+                and start_date = #{startDate}
+            </if>
+            <if test="endDate != null">
+                and end_date = #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into engineer.build_progress_plan(p_id, main_task, sub_task, start_date, end_date)
+        values (#{pId}, #{mainTask}, #{subTask}, #{startDate}, #{endDate})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.build_progress_plan
+        <set>
+            <if test="pId != null">
+                p_id = #{pId},
+            </if>
+            <if test="mainTask != null and mainTask != ''">
+                main_task = #{mainTask},
+            </if>
+            <if test="subTask != null and subTask != ''">
+                sub_task = #{subTask},
+            </if>
+            <if test="startDate != null">
+                start_date = #{startDate},
+            </if>
+            <if test="endDate != null">
+                end_date = #{endDate},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.build_progress_plan where id = #{id}
+    </delete>
+
+</mapper>

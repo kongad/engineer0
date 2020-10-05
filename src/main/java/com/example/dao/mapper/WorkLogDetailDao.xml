@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.WorkLogDetailDao">
+
+    <resultMap id="BaseResultMap" type="com.example.entity.WorkLogDetail">
+        <!--@Table work_log_detail-->
+        <result property="编号" column="编号" jdbcType="INTEGER"/>
+        <result property="施工日志id" column="施工日志ID" jdbcType="INTEGER"/>
+        <result property="施工班组" column="施工班组" jdbcType="INTEGER"/>
+        <result property="施工人数" column="施工人数" jdbcType="INTEGER"/>
+        <result property="施工内容" column="施工内容" jdbcType="VARCHAR"/>
+        <result property="备注" column="备注" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BaseResultMap">
+        select
+          编号, 施工日志ID, 施工班组, 施工人数, 施工内容, 备注
+        from engineer.work_log_detail
+        where 编号 = #{编号}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BaseResultMap">
+        select
+          编号, 施工日志ID, 施工班组, 施工人数, 施工内容, 备注
+        from engineer.work_log_detail
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+          编号, 施工日志ID, 施工班组, 施工人数, 施工内容, 备注
+        from engineer.work_log_detail
+        <where>
+            <if test="编号 != null">
+                and 编号 = #{编号}
+            </if>
+            <if test="施工日志id != null">
+                and 施工日志ID = #{施工日志id}
+            </if>
+            <if test="施工班组 != null">
+                and 施工班组 = #{施工班组}
+            </if>
+            <if test="施工人数 != null">
+                and 施工人数 = #{施工人数}
+            </if>
+            <if test="施工内容 != null and 施工内容 != ''">
+                and 施工内容 = #{施工内容}
+            </if>
+            <if test="备注 != null and 备注 != ''">
+                and 备注 = #{备注}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="编号" useGeneratedKeys="true">
+        insert into engineer.work_log_detail(施工日志ID, 施工班组, 施工人数, 施工内容, 备注)
+        values (#{施工日志id}, #{施工班组}, #{施工人数}, #{施工内容}, #{备注})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update engineer.work_log_detail
+        <set>
+            <if test="施工日志id != null">
+                施工日志ID = #{施工日志id},
+            </if>
+            <if test="施工班组 != null">
+                施工班组 = #{施工班组},
+            </if>
+            <if test="施工人数 != null">
+                施工人数 = #{施工人数},
+            </if>
+            <if test="施工内容 != null and 施工内容 != ''">
+                施工内容 = #{施工内容},
+            </if>
+            <if test="备注 != null and 备注 != ''">
+                备注 = #{备注},
+            </if>
+        </set>
+        where 编号 = #{编号}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from engineer.work_log_detail where 编号 = #{编号}
+    </delete>
+
+</mapper>
